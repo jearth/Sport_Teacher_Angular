@@ -1,0 +1,95 @@
+<body>
+    <div id="wrap">
+        <app-header></app-header>
+        <div id="container">
+            <app-sidebar></app-sidebar>
+            <div id="content">
+                <div>
+                    <h4>지도자 관리</h4>
+                    <div class="container" id="container1">
+                        <h6>검색 조회</h6>
+                        <div class="search-box">
+                            <div class="select">
+                                <div class="selected">
+                                    <div class="selected-value">전체</div>
+                                    <div class="arrow"></div>
+                                </div>
+                                <ul>
+                                    <li class="option">전체</li>
+                                    <li class="option">이름</li>
+                                    <li class="option">종목</li>
+                                </ul>
+                            </div>
+                            <!-- select, option으로 구성하면 option을 디자인 할 수 없음. 때문에 ul과 li로 코드짜기 -->
+                            <div class="input-box">
+                                <input type="text" placeholder="이름을 입력해주세요." id="searchInput">
+                            </div>
+                            <div class="button-box">
+                                <div class="search-button">검색하기</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container" id="container2">
+                        <div class="row row-cols-1">
+                            <div class="content-header">
+                                <h5>
+                                    전체 지도자 목록
+                                    <p id="totalleader">총</p>
+                                </h5>
+                                <div class="button-box">
+                                    <div class="button register" routerLink="/register">
+                                        지도자 등록하기
+                                    </div>
+                                    <div class="button delete">삭제하기</div>
+                                    <div id="deletePopup" class="popup">
+                                        <h2>지도자 삭제</h2>
+                                        <span class="close" onclick="closePopup('deletePopup')">&times;</span>
+                                        <p>지도자를 삭제하시겠습니까? <br>삭제된 지도자는 복구되지 않습니다.</p>
+                                        <div class="popup-button-box">
+                                            <button class="confirm">확인</button>
+                                            <button class="register" onclick="close-popup">취소</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="leaderTable">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th><input type="checkbox" id="selectAll" />번호</th>
+                                            <th>식별코드</th>
+                                            <th>이름</th>
+                                            <th>종목</th>
+                                            <th>소속학교</th>
+                                            <th>이력 정보 상세</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="leaderTable_body"></tbody>
+                                </table>
+                            </div>
+                            <div class="col">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous" id="PreviousPageLink">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <div id="page">
+                                        </div>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next" id="NextPageLink">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <app-footer></app-footer>
+            </div>
+        </div>
+    </div>
+</body>
