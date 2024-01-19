@@ -2,7 +2,16 @@
 #container {
     display: flex;
 }
-  
+
+#content {
+    background-color: #FBFBFB;
+}
+
+#content h4 {
+    margin-left: 60px;
+    font-size: 30px;
+}
+
 #container1 {
     margin-top: 60px;
     margin-left: 60px;
@@ -31,6 +40,7 @@
     margin-right: 38px;
     font-weight: bold;
     color: #212529;
+    font-size: 15px;
 }
 
 /* ----------------------------------------------------------- */
@@ -119,7 +129,7 @@
 
 #container1 .search-box .input-box input {
     width: 220px;
-    height: 36px;
+    height: 20px;
     margin-right: 20px;
     border-radius: 0.5em;
     border: 2px solid #EEEEEE;
@@ -133,7 +143,7 @@
 
 #container1 .button-box .search-button {
     width: 88px;
-    height: 36px;
+    height: 25px;
     color: #0F2D6A;
     font-size: 13px;
     font-weight: bold;
@@ -163,6 +173,7 @@
 
 #container2 h5 {
     margin-top: 35px;
+    font-size: 20px;
     font-weight: bold;
     color: #222222;
     display: flex;
@@ -194,7 +205,7 @@
 
 #container2 .button.register {
     width: 130px;
-    height: 36px;
+    height: 20px;
     font-size: 13px;
     font-weight: bold;
     background-color: #0F2D6A;
@@ -203,11 +214,12 @@
 
 #container2 .button.delete {
     width: 92px;
-    height: 36px;
+    height: 20px;
     font-size: 13px;
     font-weight: bold;
     background-color: #FFE0DF;
     color: #DD4B39;
+    margin-left: 10px;
 }
 
 .popup {
