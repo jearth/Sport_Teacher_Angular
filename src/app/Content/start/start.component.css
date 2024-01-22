@@ -1,4 +1,4 @@
-/* 컨텐츠 박스 1 */
+/* 전체적인 컨텐츠 박스 */
 #container {
     display: flex;
 }
@@ -8,11 +8,17 @@
 }
 
 #content h4 {
+    margin-top: 40px;
     margin-left: 60px;
-    font-size: 30px;
+    font-size: 25px;
+    font-weight: bold;
+    color: black;
 }
 
-#container1 {
+/* ----------------------------------------------------------- */
+/* 검색 박스 */
+
+#search-container {
     margin-top: 60px;
     margin-left: 60px;
     width: 1280px;
@@ -26,16 +32,16 @@
     display: flex;
 }
 
-#container1 .search-box {
+#search-container .search-box {
     display: flex;
     align-items: center;
 }
 
-#container1 h4 {
+#search-container h4 {
     color: #292121;
 }
 
-#container1 h6 {
+#search-container h6 {
     margin-left: 44px;
     margin-right: 38px;
     font-weight: bold;
@@ -43,15 +49,15 @@
     font-size: 15px;
 }
 
-/* ----------------------------------------------------------- */
+/* --------------------- */
 
-#container1 .select {
+#search-container .select {
     width: 179px;
     height: 35px;
     margin-right: 13px;
 }
 
-#container1 .selected {
+#search-container .selected {
     display: flex;
     align-items: center;
     padding: 6px 10px;
@@ -60,13 +66,13 @@
     cursor: pointer;
 }
 
-#container1 .selected-value {
+#search-container .selected-value {
     font-weight: bold;
     font-size: 13px;
     color: #212529;
 }
 
-#container1 .arrow {
+#search-container .arrow {
     border: 2px solid #5D5D5D;
     border-width: 0 2px 2px 0;
     display: inline-block;
@@ -76,7 +82,7 @@
     margin-bottom: 5px;
 }
 
-#container1 ul {
+#search-container ul {
     width: 179px;
     height: 35px;
     list-style: none;
@@ -88,7 +94,7 @@
     box-sizing: border-box;
 }
 
-#container1 .option {
+#search-container .option {
     padding: 8px;
     font-weight: bold;
     font-size: 13px;
@@ -98,38 +104,37 @@
     border: 2px solid #EEEEEE;
 }
 
-#container1 .option:first-child {
+#search-container .option:first-child {
     border-bottom: none;
 }
 
-#container1 .option:nth-child(2) {
+#search-container .option:nth-child(2) {
     border-bottom: none;
     border-top: none;
 }
 
-#container1 .option:last-child {
+#search-container .option:last-child {
     border-top: none;
 }
 
-#container1 .option:hover {
+#search-container .option:hover {
     background-color: #EEEEEE;
     color: rgb(0, 0, 0);
 }
 
-#container1 .select.active ul {
+#search-container .select.active ul {
     display: block;
 }
 
-/* ----------------------------------------------------------- */
-
-#container1 select option:checked {
+#search-container select option:checked {
     background-color: #EEEEEE;
     color: rgb(0, 0, 0);
 }
 
-#container1 .search-box .input-box input {
+/* --------------------- */
+
+#search-container .search-box .input-box input {
     width: 220px;
-    height: 20px;
     margin-right: 20px;
     border-radius: 0.5em;
     border: 2px solid #EEEEEE;
@@ -137,13 +142,15 @@
     padding: 5px 10px;
 }
 
-#container1 .input-box input::placeholder {
+#search-container .input-box input::placeholder {
     color: #969696;
 }
 
-#container1 .button-box .search-button {
+/* --------------------- */
+
+#search-container .button-box .search-button {
     width: 88px;
-    height: 25px;
+    height: 35px;
     color: #0F2D6A;
     font-size: 13px;
     font-weight: bold;
@@ -154,8 +161,10 @@
     cursor: pointer;
 }
 
-/* 컨텐츠 박스2 */
-#container2 {
+/* ----------------------------------------------------------- */
+
+/* 전체 지도자 목록 박스 */
+#Leader-list-container {
     margin-top: 16px;
     margin-left: 60px;
     width: 1280px;
@@ -171,7 +180,7 @@
     align-items: center;
 }
 
-#container2 h5 {
+#Leader-list-container h5 {
     margin-top: 35px;
     font-size: 20px;
     font-weight: bold;
@@ -180,7 +189,7 @@
     margin-left: 30px;
 }
 
-#container2 h5 p {
+#Leader-list-container h5 p {
     color: #222222;
     font-size: 15px;
     font-weight: bold;
@@ -188,13 +197,13 @@
     margin-top: 3px;
 }
 
-#container2 .button-box {
+#Leader-list-container .button-box {
     gap: 12px;
     margin-right: 30px;
     padding-top: 20px;
 }
 
-#container2 .button {
+#Leader-list-container .button {
     padding: 8px;
     text-align: center;
     display: inline-block;
@@ -203,7 +212,15 @@
     border-radius: 0.5em;
 }
 
-#container2 .button.register {
+#Leader-list-container .button.register {
+    width: 130px;
+    font-size: 13px;
+    font-weight: bold;
+    background-color: #0F2D6A;
+    color: white;
+}
+
+#Leader-list-container .button.register h5 {
     width: 130px;
     height: 20px;
     font-size: 13px;
@@ -212,9 +229,13 @@
     color: white;
 }
 
-#container2 .button.delete {
+#Leader-list-container .button.register a {
+    text-decoration: none;
+    color: white;
+}
+
+#Leader-list-container .button.delete {
     width: 92px;
-    height: 20px;
     font-size: 13px;
     font-weight: bold;
     background-color: #FFE0DF;

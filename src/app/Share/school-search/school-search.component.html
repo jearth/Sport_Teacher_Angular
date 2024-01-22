@@ -1,0 +1,33 @@
+<div id="SchoolModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>학교 식별코드 검색</h2>
+            <span class="close" (click)="closeSchoolSearchModal()">&times;</span>
+        </div>
+        <!-- 모달 내용 -->
+        <div class="search-container">
+            <p>학교명</p>
+            <input type="text" id="schoolCodeInput" placeholder="학교명을 입력해주세요.">
+            <button id="searchSchoolButton">검색하기</button>
+        </div>
+        <div id="schoolTable">
+            <h2>
+                총 학교
+                <p id="totalSchool">총</p>
+            </h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>학교명</th>
+                    </tr>
+                </thead>
+                <tbody class="schoolTable_body"></tbody>
+            </table>
+        </div>
+        <div class="button-box">
+            <div class="button delete" id="cancelSchool" (click)="closeSchoolSearchModal()">취소하기</div>
+            <div class="button register" id="registerSchool">등록하기</div>
+        </div>
+    </div>
+</div>

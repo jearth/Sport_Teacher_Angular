@@ -1,0 +1,142 @@
+#SchoolModal {
+    left: 700px;
+}
+
+#SchoolModal .modal-content {
+    height: 700px;
+    background-color: #fefefe;
+    border: 1px solid #DDDDDD;
+    width: 100%;
+}
+
+/* 모달 헤더 스타일 */
+#SchoolModal .modal-header {
+    border-bottom: 2px solid #ddd;
+}
+
+#SchoolModal .modal-header h2 {
+    margin-left: 30px;
+    margin-top: 30px;
+    margin-bottom: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #0F2D6A;
+}
+
+/* 닫기 버튼 스타일 */
+#SchoolModal .close {
+    color: #767676;
+    margin-right: 15px;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+#SchoolModal .search-container {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    margin-left: 28px;
+    margin-right: 28px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+}
+
+#SchoolModal .search-container p {
+    margin-top: 13px;
+    margin-right: 40px;
+    font-weight: bold;
+}
+
+#SchoolModal .search-container input {
+    height: 40px;
+    width: 260px;
+    border: 1px solid #DDDDDD;
+    border-radius: 0.5em;
+}
+
+#SchoolModal .search-container input::placeholder {
+    font-size: 15px;
+    color: #969696;
+    padding-left: 10px;
+}
+
+#SchoolModal .search-container button {
+    margin-left: 10px;
+    height: 40px;
+    width: 80px;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid #0F2D6A;
+    border-radius: 0.5em;
+    background-color: #ffffff;
+    color: #0F2D6A;
+}
+
+/* 학교 테이블 스타일 */
+#schoolTable {
+    margin-top: 20px;
+    margin-left: 28px;
+    overflow: auto;
+    height: 400px;
+}
+
+#schoolTable h2 {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+}
+
+#schoolTable h2 p {
+    color: #0F2D6A;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 8px;
+    margin-top: 3px;
+}
+
+#schoolTable th, #schoolTable td {
+    width: 222px;
+    padding: 8px;
+    text-align: center;
+}
+
+#schoolTable th {
+    border-top: 4px solid #EEEEEE;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid #EEEEEE;
+}
+
+tbody.schoolTable_body {
+    font-weight: bold;
+    font-size: 15px;
+    color: #212529;
+}
+
+.button-box {
+    margin-top: 40px;
+    margin-left: 140px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+}
+
+.button-box .delete {
+    color: #0F2D6A;
+    border: 1px solid #0F2D6A;
+    margin-right: 8.5px;
+    padding-left: 38px;
+    padding-top: 15px;
+    border-radius: 0.5em;
+}
+
+.button-box .register {
+    background-color: #0F2D6A;
+    color: white;
+    padding-left: 38px;
+    padding-top: 15px;
+    border-radius: 0.5em;
+}
+

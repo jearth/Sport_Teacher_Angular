@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +14,9 @@ import { RegisterComponent } from './Content/register/register.component';
 import { EditComponent } from './Content/edit/edit.component';
 import { DetailComponent } from './Content/detail/detail.component';
 
+import { MatDialogModule } from '@angular/material/dialog';
+import { LeaderSearchComponent } from './Share/leader-search/leader-search.component';
+import { SchoolSearchComponent } from './Share/school-search/school-search.component'
 
 @NgModule({
   declarations: [
@@ -21,12 +27,16 @@ import { DetailComponent } from './Content/detail/detail.component';
     SidebarComponent,
     RegisterComponent,
     EditComponent,
-    DetailComponent
+    DetailComponent,
+    LeaderSearchComponent,
+    SchoolSearchComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    
+    NgbModule,
+    MatDialogModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,161 @@
+#LeaderModal {
+    left: 700px;
+}
+
+#LeaderModal .modal-content {
+    height: 700px;
+    background-color: #fefefe;
+    border: 1px solid #DDDDDD;
+    width: 100%;
+}
+
+/* 모달 헤더 스타일 */
+#LeaderModal .modal-header {
+    border-bottom: 2px solid #ddd;
+}
+
+#LeaderModal .modal-header h2 {
+    margin-left: 30px;
+    margin-top: 30px;
+    margin-bottom: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #0F2D6A;
+}
+
+/* 닫기 버튼 스타일 */
+#LeaderModal .close {
+    color: #767676;
+    margin-right: 15px;
+    font-size: 35px;
+    cursor: pointer;
+}
+
+#LeaderModal .close:hover,
+#LeaderModal .close:focus {
+    color: black;
+    cursor: pointer;
+}
+
+/* 모달 검색 창 스타일 */
+#LeaderModal .search-container {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    margin-left: 28px;
+    margin-right: 28px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+}
+
+#LeaderModal .search-container p {
+    margin-top: 13px;
+    margin-right: 60px;
+    font-weight: bold;
+}
+
+#LeaderModal .search-container input {
+    height: 40px;
+    width: 260px;
+    border: 1px solid #DDDDDD;
+    border-radius: 0.5em;
+}
+
+#LeaderModal .search-container input::placeholder {
+    font-size: 15px;
+    color: #969696;
+    padding-left: 10px;
+}
+
+#LeaderModal .search-container button {
+    margin-left: 10px;
+    height: 40px;
+    width: 80px;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid #0F2D6A;
+    border-radius: 0.5em;
+    background-color: #ffffff;
+    color: #0F2D6A;
+}
+
+/* 지도자 테이블 스타일 */
+#leaderTable {
+    margin-top: 20px;
+    margin-left: 28px;
+    overflow: auto;
+    height: 400px;
+}
+
+#leaderTable h2 {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+}
+
+#leaderTable h2 p {
+    color: #0F2D6A;
+    font-size: 15px;
+    font-weight: bold;
+    margin-left: 8px;
+    margin-top: 3px;
+}
+
+#leaderTable th, #leaderTable td {
+    width: 148px;
+    padding: 8px;
+}
+
+td:first-child, th:first-child {
+    width: 50px;
+    text-align: center;
+}
+
+td:not(:first-child), th:not(:first-child) {
+    text-align: left;
+}
+
+tbody.leaderTable_body {
+    font-weight: bold;
+    font-size: 15px;
+    color: #212529;
+}
+
+tr {
+    border-bottom: 1px solid #EEEEEE;
+}
+
+#leaderTable th {
+    border-top: 4px solid #EEEEEE;
+    border-left: none;
+    border-right: none;
+    border-bottom: 2px solid #EEEEEE;
+}
+
+.button-box {
+    margin-top: 40px;
+    margin-left: 140px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+}
+
+.button-box .delete {
+    color: #0F2D6A;
+    border: 1px solid #0F2D6A;
+    margin-right: 8.5px;
+    padding-left: 38px;
+    padding-top: 15px;
+    border-radius: 0.5em;
+}
+
+.button-box .register {
+    background-color: #0F2D6A;
+    color: white;
+    padding-left: 38px;
+    padding-top: 15px;
+    border-radius: 0.5em;
+}
+

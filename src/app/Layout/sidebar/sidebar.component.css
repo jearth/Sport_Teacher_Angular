@@ -1,11 +1,11 @@
 #sidebar {
     background-color: #ffffff;
     padding: 10px;
-    width: 180px;
-    border-right: 1px solid #EEEEEE;
+    width: 200px;
 }
 
 #sidebar .nav-link {
+    margin-left: 10px;
     width: 161px;
     height: 56px;
     margin-top: 20px;

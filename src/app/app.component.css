@@ -1,0 +1,11 @@
+#container {
+    display: flex;
+}
+
+app-sidebar {
+    border-right: 1px solid #EEEEEE;
+}
+
+#content {
+    background-color: #FBFBFB;
+}
