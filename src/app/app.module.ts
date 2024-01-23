@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
-
+import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,7 +16,10 @@ import { DetailComponent } from './Content/detail/detail.component';
 
 import { MatDialogModule } from '@angular/material/dialog';
 import { LeaderSearchComponent } from './Share/leader-search/leader-search.component';
-import { SchoolSearchComponent } from './Share/school-search/school-search.component'
+import { SchoolSearchComponent } from './Share/school-search/school-search.component';
+import { AlertComponent } from './utils/alert/alert.component';
+import { AlertErrorComponent } from './utils/alert-error/alert-error.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -29,14 +32,18 @@ import { SchoolSearchComponent } from './Share/school-search/school-search.compo
     EditComponent,
     DetailComponent,
     LeaderSearchComponent,
-    SchoolSearchComponent
+    SchoolSearchComponent,
+    AlertComponent,
+    AlertErrorComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    RouterModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

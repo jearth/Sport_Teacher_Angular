@@ -2,7 +2,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <h2>학교 식별코드 검색</h2>
-            <span class="close" (click)="closeSchoolSearchModal()">&times;</span>
+            <span class="close" (click)="closeSchoolSearchModal(false)">&times;</span>
         </div>
         <!-- 모달 내용 -->
         <div class="search-container">
@@ -26,8 +26,8 @@
             </table>
         </div>
         <div class="button-box">
-            <div class="button delete" id="cancelSchool" (click)="closeSchoolSearchModal()">취소하기</div>
-            <div class="button register" id="registerSchool">등록하기</div>
+            <div class="button delete" id="cancelSchool" (click)="closeSchoolSearchModal(false)">취소하기</div>
+            <div class="button register" id="registerSchool" (click)="closeSchoolSearchModal(true)">등록하기</div>
         </div>
     </div>
 </div>

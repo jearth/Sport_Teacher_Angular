@@ -9,7 +9,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class SchoolSearchComponent {
   constructor(public dialogRef: MatDialogRef<SchoolSearchComponent>) {}
 
-  closeSchoolSearchModal(): void {
-    this.dialogRef.close();
+  closeSchoolSearchModal(bool: boolean): void {
+    if(bool) return this.dialogRef.close('sc0001');
+    return this.dialogRef.close();
   }
 }

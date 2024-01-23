@@ -1,0 +1,8 @@
+<div id="alerterrorPopup" class="popup"> 
+    <h2>{{data.title}}</h2>
+    <span class="close" (click)="closeDialog()">&times;</span>
+    <div class="custom-dialog-content">
+        <mat-dialog-content [innerHTML]="data.content"></mat-dialog-content>
+    </div>
+    <button class="confirm" (click)="closeDialog()">확인</button>
+</div>

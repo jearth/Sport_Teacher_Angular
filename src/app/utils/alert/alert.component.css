@@ -1,0 +1,55 @@
+
+/* 취소하기 버튼 클릭 시 */
+.popup {
+    width: 400px;
+    height: 253px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 0.5em;
+}
+
+#alertPopup h2 {
+    font-size: 25px;
+    color: #0F2D6A;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.custom-dialog-content mat-dialog-content {
+    color: rgb(0, 0, 0);
+    text-align: center;
+}
+
+.popup button.cancel {
+    margin-left: 85px;
+    margin-top: 15px;
+    width: 88px;
+    height: 43px;
+    background-color: #ffffff;
+    color: #0F2D6A;
+    border: 2px solid #0F2D6A;
+    border-radius: 0.5em;
+    margin-right: 4px;
+}
+
+.popup button.confirm {
+    width: 88px;
+    height: 43px;
+    background-color: #0F2D6A;
+    color: #ffffff;
+    border: 1px solid #0F2D6A;
+    border-radius: 0.5em;
+}
+
+/* 닫기 버튼 스타일 */
+.popup .close {
+    display: none;
+}

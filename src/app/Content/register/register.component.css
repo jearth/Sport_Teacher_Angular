@@ -374,10 +374,14 @@ input[name="tel3"].custom-input {
 }
 
 /* 셀 스타일 */
-#register-container .History-section-heading td,
-#register-container .Certificate-section-heading td {
+#register-container .History-section-heading td {
     padding: 8px;
     text-align: center;
+}
+
+#register-container .Certificate-section-heading td {
+    text-align: center;
+    padding: 10px;
 }
 
 /* 입력 필드 스타일 */
@@ -403,7 +407,7 @@ input[name="tel3"].custom-input {
 }
 
 /* 셀렉트 박스 스타일 */
-#register-container #sport-select-container2 {
+#register-container #sport-select-container {
     border: 1px solid #e7e7e7;
     border-radius: 0.5em;
     font-size: 15px;
@@ -414,7 +418,7 @@ input[name="tel3"].custom-input {
     color: #969696;
 }
 
-#sport-select-container2 option {
+#sport-select-container option {
     color: #333;
 }
 
@@ -430,6 +434,7 @@ input[name="tel3"].custom-input {
     width: 56px;
     height: 44px;
     font-size: 15px;
+    font-weight: bold;
     background-color: #238AF7;
     color: white;
     border: none;
@@ -437,11 +442,18 @@ input[name="tel3"].custom-input {
     border-radius: 0.2em;
 }
 
-#register-container .History-section-heading button.delete,
-#register-container .Certificate-section-heading button.delete {
+#register-container .History-section-heading button.History-delete,
+#register-container .Certificate-section-heading button.Certificate-delete {
     background-color: #969696;
 }
 
+#register-container .Certificate-section-heading button.Certificate-add {
+    margin-left: 8px;
+}
+
+#register-container .Certificate-section-heading button.Certificate-delete {
+    margin-left: 8px;
+}
 
 /* 컨텐츠 박스 1-3 */
 #register-container .Certificate-section-heading {
@@ -467,7 +479,6 @@ input[name="tel3"].custom-input {
 .button {
     width: 139px;
     height: 55px;
-    padding: 10px 20px;
     border: none;
     cursor: pointer;
     font-weight: bold;
@@ -487,123 +498,4 @@ input[name="tel3"].custom-input {
     color: white;
     padding-left: 38px;
     padding-top: 15px;
-}
-
-/* --------------------------------------- */
-
-/* 취소하기 버튼 클릭 시 */
-.popup {
-    width: 400px;
-    height: 253px;
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    border-radius: 0.5em;
-}
-
-#cancelPopup h2 {
-    font-size: 25px;
-    color: #0F2D6A;
-    text-align: center;
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-#cancelPopup p {
-    font-size: 15px;
-    text-align: center;
-    margin-top: 35px;
-}
-
-.popup button.cancel {
-    margin-left: 85px;
-    margin-top: 15px;
-    width: 88px;
-    height: 43px;
-    background-color: #ffffff;
-    color: #0F2D6A;
-    border: 2px solid #0F2D6A;
-    border-radius: 0.5em;
-}
-
-.popup button.confirm {
-    width: 88px;
-    height: 43px;
-    background-color: #0F2D6A;
-    color: #ffffff;
-    border: 2px solid #0F2D6A;
-    border-radius: 0.5em;
-}
-
-/* 닫기 버튼 스타일 */
-.popup .close {
-    display: none;
-}
-
-/* 등록하기 버튼 클릭 시 유효값이 다 채워지지 않았을 때 */
-#button-register-error.popup h2 {
-    font-size: 25px;
-    color: #0F2D6A;
-    text-align: center;
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-#button-register-error p {
-    font-size: 15px;
-    text-align: center;
-    margin-top: 35px;
-}
-
-#button-register-error button.confirm {
-    margin-left: 130px;
-    margin-top: 15px;
-    width: 88px;
-    height: 43px;
-    background-color: #0F2D6A;
-    color: #ffffff;
-    border: 2px solid #0F2D6A;
-    border-radius: 0.5em;
-}
-
-/* 등록하기 버튼 클릭 시 유효값이 다 채워졌을 때*/
-#button-register-success.popup h2 {
-    font-size: 25px;
-    color: #0F2D6A;
-    text-align: center;
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-#button-register-success p {
-    font-size: 15px;
-    text-align: center;
-    margin-top: 35px;
-}
-
-#button-register-success button.confirm {
-    width: 88px;
-    height: 43px;
-    background-color: #0F2D6A;
-    color: #ffffff;
-    border: 2px solid #0F2D6A;
-    border-radius: 0.5em;
-}
-
-#button-register-success button.cancel {
-    margin-left: 85px;
-    margin-top: 15px;
-    width: 88px;
-    height: 43px;
-    background-color: #ffffff;
-    color: #0F2D6A;
-    border: 2px solid #0F2D6A;
-    border-radius: 0.5em;
 }

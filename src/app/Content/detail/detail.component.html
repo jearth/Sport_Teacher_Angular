@@ -1,1 +1,101 @@
-<p>detail works!</p>
+<h4 class="title-heading">지도자 등록하기</h4>
+<div class="container" id="detail-container">
+    <div class="d-flex flex-column align-items-center">
+        <h4 class="BasicInfo-section-heading">1. 일반 현황(2023년 01월 01일 기준)<span class="required-field">* 필수입력값 항목입니다.</span><hr class="section-hr"></h4>
+        <div class="container custom-container">
+            <div class="row">
+                <div class="col-sm-3 left-content">
+                    <div id="image-container">
+                        <img id="leader-image" alt="" >
+                        <p>파일 크기는 MB 이하로 등록해주세요.</p>
+                    </div>
+                </div>
+                <div class="col-sm-9 right-content">
+                    <div class="row custom-row">
+                        <div class="col-6 col-sm-6">
+                            <h6 id="code-heading" class="custom-heading">
+                                식별코드<hr class="CodeHeading-section-hr">
+                                <div id="leaderNoResult"></div>
+                            </h6>
+                        </div>
+                        <div class="col-6 col-sm-6">
+                            <h6 id="school-heading" class="custom-heading">
+                                학교명<hr class="SchoolHeading-section-hr">
+                                <p id="schoolNameResult"></p>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="row custom-row">
+                        <div class="col-4 col-sm-4">
+                            <h6 id="name-heading" class="custom-heading">
+                                성명<hr class="NameHeading-section-hr">
+                                <p id="leaderNameResult"></p>
+                            </h6>
+                        </div>
+                        <div class="col-4 col-sm-4">
+                            <h6 id="dob-heading" class="custom-heading">
+                                생년월일<hr class="DobHeading-section-hr">
+                                <p id="birthdayResult"></p>
+                            </h6>
+                        </div>
+                        <div class="col-4 col-sm-4">
+                            <h6 id="gender-heading" class="custom-heading">
+                                성별<hr class="GenderHeading-section-hr">
+                                <p id="genderResult"></p>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="row custom-row">
+                        <div class="col-4 col-sm-4">
+                            <h6 id="sport-heading" class="custom-heading">
+                                종목<hr class="SportHeading-section-hr">
+                                <p id="sportNameResult"></p>
+                            </h6>
+                        </div>
+                        <div class="col-4 col-sm-4">
+                            <h6 id="phone-heading" class="custom-heading">
+                                근무지 전화번호<hr class="PhoneHeading-section-hr">
+                                <p id="telNoResult"></p>
+                            </h6>
+                        </div>
+                        <div class="col-4 col-sm-4">
+                            <h6 id="hire-date-heading" class="custom-heading">
+                                최초채용<hr class="HireDate-section-hr">
+                                <p id="empDTResult"></p>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4 class="History-section-heading">
+            2. 근무 이력(전라북도교육청 소속 - 최초 채용일로부터)<span class="required-field">필수입력값 항목입니다.</span><hr class="section-hr">
+            <p>※ 현재 근무 중인 경우 근무 종료일을 입력하지 마십시오.</p>
+            <table id="HistoryTable">
+                <tr>
+                    <th>근무기관</th>
+                    <th>근무시작일</th>
+                    <th>근무종료일</th>
+                    <th>종목</th>
+                </tr>
+                <tbody class="historyTable_body"></tbody>
+            </table>
+        </h4>
+        <h4 class="Certificate-section-heading">
+            3. 자격사항<span class="required-field">필수입력값 항목입니다.</span><hr class="section-hr">
+            <table id="CertificateTable">
+                <tr>
+                    <th>자격/면허</th>
+                    <th>자격번호</th>
+                    <th>취득일자</th>
+                    <th>발급기관</th>
+                </tr>
+                <tbody class="certificateTable_body"></tbody>
+            </table>
+        </h4>
+        <div class="button-box">
+            <div class="button main" routerLink="/">목록으로</div>
+            <div class="button change" id="editButton">수정하기</div>
+        </div>
+    </div>
+</div>

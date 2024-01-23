@@ -4,14 +4,14 @@
         <h6>검색 조회</h6>
         <div class="search-box">
             <div class="select">
-                <div class="selected">
-                    <div class="selected-value">전체</div>
+                <div class="selected" (click)="toggleOptions()">
+                    <div class="selected-value">{{ selectedOption }}</div>
                     <div class="arrow"></div>
                 </div>
-                <ul>
-                    <li class="option">전체</li>
-                    <li class="option">이름</li>
-                    <li class="option">종목</li>
+                <ul *ngIf="showOptions">
+                    <li class="option" (click)="selectOption('전체')">전체</li>
+                    <li class="option" (click)="selectOption('이름')">이름</li>
+                    <li class="option" (click)="selectOption('종목')">종목</li>
                 </ul>
             </div>
             <div class="input-box">
@@ -35,16 +35,7 @@
                             지도자 등록하기
                         </a>
                     </div>
-                    <div class="button delete">삭제하기</div>
-                    <div id="deletePopup" class="popup">
-                        <h2>지도자 삭제</h2>
-                        <span class="close" onclick="closePopup('deletePopup')">&times;</span>
-                        <p>지도자를 삭제하시겠습니까? <br>삭제된 지도자는 복구되지 않습니다.</p>
-                        <div class="popup-button-box">
-                            <button class="confirm">확인</button>
-                            <button class="register" onclick="close-popup">취소</button>
-                        </div>
-                    </div>
+                    <div class="button delete" (click)="openStartDeleteModal()">삭제하기</div>
                 </div>
             </div>
             <div class="leaderTable">

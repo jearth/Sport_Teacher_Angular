@@ -127,16 +127,20 @@ tbody.schoolTable_body {
     color: #0F2D6A;
     border: 1px solid #0F2D6A;
     margin-right: 8.5px;
-    padding-left: 38px;
+    text-align: center;
+    padding-left: 23px;
     padding-top: 15px;
     border-radius: 0.5em;
+    padding-bottom: 10px;
+    padding-right: 21px;
 }
 
 .button-box .register {
     background-color: #0F2D6A;
     color: white;
-    padding-left: 38px;
+    padding-left: 24px;
     padding-top: 15px;
     border-radius: 0.5em;
+    padding-bottom: 10px;
+    padding-right: 23px;
 }
-
