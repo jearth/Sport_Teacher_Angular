@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { LeaderSearchComponent } from '../../Share/leader-search/leader-search.component';
+import { LeaderSearchComponent } from '../../dialogs/leader-search/leader-search.component';
 import { MatDialog } from '@angular/material/dialog';
-import { SchoolSearchComponent } from '../../Share/school-search/school-search.component';
+import { SchoolSearchComponent } from '../../dialogs/school-search/school-search.component';
 
 @Component({
   selector: 'app-edit',

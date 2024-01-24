@@ -80,6 +80,7 @@
                                     <div class="sport-select">
                                         <select class="form-select" aria-label="종목을 선택해주세요." id="sport-select-register-container" name="SportNo">
                                             <option value="">종목을 선택해주세요.</option>
+                                            <option *ngFor="let Sport of leaderDetailDTO.sports" [value]="Sport.sportNo">{{ Sport.sportName }}</option>
                                         </select>
                                     </div>
                                 </h6>
@@ -126,6 +127,7 @@
                         <td id="sport-table">
                           <select class="form-select" aria-label="종목을 선택해주세요." id="sport-select-container" [(ngModel)]="work.SportNo" [name]="'Work[' + i + '].SportNo'">
                             <option value="">종목을 선택해주세요.</option>
+                            <option *ngFor="let Sport of leaderDetailDTO.sports" [value]="Sport.sportNo">{{ Sport.sportName }}</option>
                           </select>
                           <button *ngIf="i === 0" (click)="addHistoryRow()">추가</button>
                           <button class="button History-delete" *ngIf="i >= 1 && work.buttonLabel === '삭제'" (click)="deleteHistoryRow(i)">삭제</button>

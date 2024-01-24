@@ -1,0 +1,41 @@
+<div id="LeaderModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>지도자 식별코드 검색</h2>
+            <span class="close" (click)="closeLeaderSearchModal()">&times;</span>
+        </div>
+        <!-- 내용 -->
+        <div class="search-container">
+            <p>성명</p>
+            <input type="text" id="leaderCodeInput" [(ngModel)]="searchName" placeholder="이름을 입력해주세요.">
+            <button id="searchLeaderButton" (click)="searchLeadersName()">검색하기</button>
+        </div>          
+        <div id="leaderTable">
+            <h2>
+                총 지도자
+                <p id="totalLeaders" *ngIf="leaderDetailDTO">{{ '총 ' + (leaderDetailDTO.leaders?.length || 0) + ' 명' }}</p>
+            </h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>이름</th>
+                            <th>식별코드</th>
+                        </tr>
+                    </thead>
+                    <tbody class="leaderTable_body"></tbody>
+                    <tr *ngFor="let leader of leaderDetailDTO.leaders; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ leader.leaderName }}</td>
+                        <td>{{ leader.leaderNo }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="button-box">
+            <div class="button delete" id="cancelleaders" (click)="closeLeaderSearchModal()">취소하기</div>
+            <div class="button register" id="registerleaders" >등록하기</div>
+        </div>
+    </div>
+</div>

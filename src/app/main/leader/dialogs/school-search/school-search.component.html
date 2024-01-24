@@ -1,0 +1,39 @@
+<div id="SchoolModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>학교 식별코드 검색</h2>
+            <span class="close" (click)="closeSchoolSearchModal(false)">&times;</span>
+        </div>
+        <!-- 모달 내용 -->
+        <div class="search-container">
+            <p>학교명</p>
+            <input type="text" id="schoolCodeInput" [(ngModel)]="searchSchool" placeholder="학교명을 입력해주세요.">
+            <button id="searchSchoolButton" (click)="searchSchoolName()">검색하기</button>
+        </div>
+        <div id="schoolTable">
+            <h2>
+                총 학교
+                <p id="totalSchool" *ngIf="leaderDetailDTO">{{ '총 ' + (leaderDetailDTO.schools?.length || 0) + ' 명' }}</p>
+            </h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>학교명</th>
+                        </tr>
+                    </thead>
+                    <tbody class="schoolTable_body"></tbody>
+                    <tr *ngFor="let leader of leaderDetailDTO.schools; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ leader.schoolName }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="button-box">
+            <div class="button delete" id="cancelSchool" (click)="closeSchoolSearchModal(false)">취소하기</div>
+            <div class="button register" id="registerSchool" (click)="closeSchoolSearchModal(true)">등록하기</div>
+        </div>
+    </div>
+</div>

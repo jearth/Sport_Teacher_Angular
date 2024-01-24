@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog } from '@angular/material/dialog';
-import { LeaderSearchComponent } from '../../Share/leader-search/leader-search.component';
-import { SchoolSearchComponent } from '../../Share/school-search/school-search.component';
-import { Leader } from '../../model/leader.model';
-import { AlertComponent } from '../../utils/alert/alert.component';
-import { AlertErrorComponent } from '../../utils/alert-error/alert-error.component';
+import { LeaderSearchComponent } from '../../dialogs/leader-search/leader-search.component';
+import { SchoolSearchComponent } from '../../dialogs/school-search/school-search.component';
+import { AlertComponent } from '../../../../utils/alert/alert.component';
+import { AlertErrorComponent } from '../../../../utils/alert-error/alert-error.component';
+import { GeneralService } from '../../services/general.service';
+import { LeaderDetailDTO } from '../../model/LeaderDetail.model';
 
 @Component({
   selector: 'app-register',
@@ -13,11 +13,35 @@ import { AlertErrorComponent } from '../../utils/alert-error/alert-error.compone
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  constructor(public dialog: MatDialog) {}
+  employmentHistory = [{ WorkPlace: '', StartDT: '', EndDT: '', SportNo: '', buttonLabel: '추가' }];
+  certificateList = [{ CertificateName: '', CertificateNumber: '', CertificateDT: '', Origanization: '', buttonLabel: '추가' }];
+
+  leaderDetailDTO: LeaderDetailDTO = {};
+
+  constructor(private generalService: GeneralService, public dialog: MatDialog) { }
+
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData(): void {
+    this.generalService.getLeaderDetails().subscribe(
+      (data: LeaderDetailDTO) => {
+        console.log('서버 응답:', data);
+        this.leaderDetailDTO = data;
+      },
+      (error) => {
+        console.error('HTTP 요청 에러:', error);
+      }
+    );    
+  }
 
   // 식별코드 검색 모달창 열기
   openLeaderSearchModal(): void {
     const dialogRef = this.dialog.open(LeaderSearchComponent);
+    dialogRef.afterClosed().subscribe((value: any) => {
+      console.log(`LeaderSearchComponent return value:${JSON.stringify(value)}`);
+    });
   }
 
   // 학교명 검색 모달창 열기
@@ -26,10 +50,6 @@ export class RegisterComponent {
   }
 
   // 근무 이력 테이블 추가
-  employmentHistory = [
-    { WorkPlace: '', StartDT: '', EndDT: '', SportNo: '', buttonLabel: '추가' }
-  ];
-  
   addHistoryRow() {
     this.employmentHistory.push({ WorkPlace: '', StartDT: '', EndDT: '', SportNo: '', buttonLabel: '추가' });
   
@@ -45,10 +65,6 @@ export class RegisterComponent {
   }
   
   // 자격사항 테이블 추가
-  certificateList = [
-    { CertificateName: '', CertificateNumber: '', CertificateDT: '', Origanization: '', buttonLabel: '추가' }
-  ];
-
   addCertificateRow(){
     this.certificateList.push({ CertificateName: '', CertificateNumber: '', CertificateDT: '', Origanization: '', buttonLabel: '추가' });
 
@@ -84,6 +100,7 @@ export class RegisterComponent {
     // 유효성 검사
     let validateResult: boolean = false;
     
+    // 유효성 검사를 만족하지 않으면, 필수입력값 에러 모달창 열기
     if (!validateResult) {
       this.openRegisterErrorModal();
     } else {

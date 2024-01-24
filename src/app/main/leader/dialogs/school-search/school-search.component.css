@@ -76,7 +76,6 @@
 #schoolTable {
     margin-top: 20px;
     margin-left: 28px;
-    overflow: auto;
     height: 400px;
 }
 
@@ -95,10 +94,17 @@
     margin-top: 3px;
 }
 
+.table-container{
+    overflow-y: auto;
+    height: 370px;
+}
+
 #schoolTable th, #schoolTable td {
     width: 222px;
     padding: 8px;
     text-align: center;
+    font-size: 15px;
+    color: #212529;
 }
 
 #schoolTable th {
@@ -129,7 +135,7 @@ tbody.schoolTable_body {
     margin-right: 8.5px;
     text-align: center;
     padding-left: 23px;
-    padding-top: 15px;
+    padding-top: 11px;
     border-radius: 0.5em;
     padding-bottom: 10px;
     padding-right: 21px;
@@ -139,7 +145,7 @@ tbody.schoolTable_body {
     background-color: #0F2D6A;
     color: white;
     padding-left: 24px;
-    padding-top: 15px;
+    padding-top: 11px;
     border-radius: 0.5em;
     padding-bottom: 10px;
     padding-right: 23px;

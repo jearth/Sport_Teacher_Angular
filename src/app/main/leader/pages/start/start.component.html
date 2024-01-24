@@ -51,6 +51,13 @@
                         </tr>
                     </thead>
                     <tbody class="leaderTable_body"></tbody>
+                    <tr *ngFor="let leaders of leaderDTO; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ leaders.leaderNo }}</td>
+                        <td>{{ leaders.leaderName }}</td>
+                        <td>{{ leaders.sportName }}</td>
+                        <td>{{ leaders.schoolName }}</td>
+                    </tr>
                 </table>
             </div>
             <div class="col">

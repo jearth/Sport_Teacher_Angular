@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { AlertErrorComponent } from '../../utils/alert-error/alert-error.component';
-import { AlertComponent } from '../../utils/alert/alert.component';
+import { AlertErrorComponent } from '../../../../utils/alert-error/alert-error.component';
+import { AlertComponent } from '../../../../utils/alert/alert.component';
 import { MatDialog } from '@angular/material/dialog';
+import { LeaderDTO } from '../../model/Leader.model';
+import { GeneralService } from '../../services/general.service';
+
 
 @Component({
   selector: 'app-start',
@@ -9,7 +12,25 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./start.component.css']
 })
 export class StartComponent {
-  constructor(public dialog: MatDialog) {}
+  constructor(private generalService: GeneralService, public dialog: MatDialog) { }
+
+  leaderDTO: LeaderDTO[] = [];
+
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData(): void {
+    this.generalService.getLeaders().subscribe(
+      (data: LeaderDTO[]) => {
+        console.log('서버 응답:', data);
+        this.leaderDTO = data;
+      },
+      (error) => {
+        console.error('HTTP 요청 에러:', error);
+      }
+    );    
+  }
 
   selectedOption: string = '전체';
   searchQuery: string = '';

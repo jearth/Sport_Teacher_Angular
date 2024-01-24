@@ -344,8 +344,9 @@ th {
 }
 
 td {
+    font-size: 14px;
     font-weight: bold;
-    padding: 7px;
+    padding: 12px;
     text-align: center;
     border-bottom: 1px solid #EEEEEE;
 }
