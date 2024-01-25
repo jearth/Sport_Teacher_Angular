@@ -1,14 +1,14 @@
 export class Work {
-    WorkPlace?: string;
-    StartDT?: Date;
-    EndDT?: Date;
-    SportNo?: string;
+    workPlace?: string;
+    startDT?: Date;
+    endDT?: Date;
+    sportName?: string;
 }
 
 export class WorkDetail {
-    WorkPlace?: string;
-    StartDT?: Date;
-    EndDT?: Date;
-    SportNo?: string;
-    SportName?: string;
+    workPlace?: string;
+    startDT?: Date;
+    endDT?: Date;
+    sportNo?: string;
+    sportName?: string;
 }

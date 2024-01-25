@@ -17,6 +17,9 @@ export class RegisterComponent {
   certificateList = [{ CertificateName: '', CertificateNumber: '', CertificateDT: '', Origanization: '', buttonLabel: '추가' }];
 
   leaderDetailDTO: LeaderDetailDTO = {};
+  leaderNoValue: string | undefined;
+  leaderNameValue: string | undefined;
+  schoolNameValue: string | undefined;
 
   constructor(private generalService: GeneralService, public dialog: MatDialog) { }
 
@@ -40,6 +43,8 @@ export class RegisterComponent {
   openLeaderSearchModal(): void {
     const dialogRef = this.dialog.open(LeaderSearchComponent);
     dialogRef.afterClosed().subscribe((value: any) => {
+      this.leaderNoValue = value?.leaderNo;
+      this.leaderNameValue = value?.leaderName;
       console.log(`LeaderSearchComponent return value:${JSON.stringify(value)}`);
     });
   }
@@ -47,6 +52,10 @@ export class RegisterComponent {
   // 학교명 검색 모달창 열기
   openSchoolSearchModal(): void {
     const dialogRef = this.dialog.open(SchoolSearchComponent);
+    dialogRef.afterClosed().subscribe((value: any) => {
+      this.schoolNameValue = value?.schoolName;
+      console.log(`LeaderSearchComponent return value:${JSON.stringify(value)}`);
+    });
   }
 
   // 근무 이력 테이블 추가

@@ -25,17 +25,17 @@
                         </tr>
                     </thead>
                     <tbody class="leaderTable_body"></tbody>
-                    <tr *ngFor="let leader of leaderDetailDTO.leaders; let i = index">
+                    <tr *ngFor="let leader of leaderDetailDTO.leaders; let i = index" (click)="selectRow(leader)" [ngClass]="{ 'selected-row': selectedLeader === leader }">
                         <td>{{ i + 1 }}</td>
                         <td>{{ leader.leaderName }}</td>
                         <td>{{ leader.leaderNo }}</td>
-                    </tr>
+                      </tr>
                 </table>
             </div>
         </div>
         <div class="button-box">
             <div class="button delete" id="cancelleaders" (click)="closeLeaderSearchModal()">취소하기</div>
-            <div class="button register" id="registerleaders" >등록하기</div>
+            <div class="button register" id="registerleaders" (click)="registerLeaderSearchModal()">등록하기</div>
         </div>
     </div>
 </div>

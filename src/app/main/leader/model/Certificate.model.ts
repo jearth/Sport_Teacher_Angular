@@ -1,6 +1,6 @@
 export class Certificate {
-    CertificateName?: string;
-    CertificateNumber?: string;
-    CertificateDT?: string;
-    Origanization?: string;
+    certificateName?: string;
+    certificateNumber?: string;
+    certificateDT?: string;
+    origanization?: string;
 }

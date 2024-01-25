@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LeaderDetailDTO } from '../../model/LeaderDetail.model';
 import { GeneralService } from '../../services/general.service';
+import { AlertErrorComponent } from '../../../../utils/alert-error/alert-error.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-leader-search',
@@ -39,10 +41,38 @@ export class LeaderSearchComponent {
       this.loadData(); 
     }
   }
-  
+
+  selectedLeader: any;
+
   closeLeaderSearchModal(): void {
+    this.generalService.setSelectedLeaderNo(this.selectedLeader);
     this.dialogRef.close({
-      leaderNo: '1234'
+      leaderNo: this.selectedLeader ? this.selectedLeader.leaderNo : null,
+      leaderName: this.selectedLeader ? this.selectedLeader.leaderName : null
     });
   }
+  
+  selectRow(leader: any): void {
+    this.selectedLeader = leader;
+  }
+  
+  registerLeaderSearchModal(): void {
+    if (this.selectedLeader) {
+      const selectedLeaderNo = this.selectedLeader.leaderNo;
+      const selectedLeaderName = this.selectedLeader.leaderName;
+      this.generalService.setSelectedLeaderNo(selectedLeaderNo);
+      this.closeLeaderSearchModal();
+    } else {
+      this.openRegisterErrorLeaderSearchModal();
+    }
+  }
+
+  // 선택된 식별 코드 없음 에러 모달창 열기
+  openRegisterErrorLeaderSearchModal(): void {
+    const dialogRef = this.dialog.open(AlertErrorComponent, {
+      data: { title: '선택된 식별코드 없음',
+              content: '선택된 지도자 식별코드가 없습니다. <br> 식별코드를 선택해주시기 바랍니다.' }
+    });
+  }
+
 }

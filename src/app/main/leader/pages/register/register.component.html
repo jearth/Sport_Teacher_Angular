@@ -24,7 +24,7 @@
                                 <h6 id="code-heading" class="custom-heading">
                                     식별코드<span class="highlight-text">*</span>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="식별코드를 선택해주세요." aria-label="식별코드를 선택해주세요." aria-describedby="button-Leader" name="LeaderNo">
+                                        <input type="text" class="form-control" [placeholder]="leaderNoValue ? leaderNoValue : '식별코드를 선택해주세요.'" name="LeaderNo">
                                         <button class="btn btn-outline-secondary" type="button" id="button-Leader" (click)="openLeaderSearchModal()">식별코드검색</button>
                                     </div>
                                 </h6>
@@ -33,7 +33,7 @@
                                 <h6 id="school-heading" class="custom-heading">
                                     학교명<span class="highlight-text">*</span>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="schoolcode-heading" placeholder="학교명을 선택해주세요." aria-label="학교명을 선택해주세요." aria-describedby="button-addon-School">
+                                        <input type="text" class="form-control" id="schoolcode-heading" [placeholder]="schoolNameValue ? schoolNameValue : '학교명을 선택해주세요.'" aria-describedby="button-addon-School">
                                         <input type="hidden" id="hidden-SchoolName" name="SchoolNo" />
                                         <button class="btn btn-outline-secondary" type="button" id="button-addon-School" (click)="openSchoolSearchModal()">학교명검색</button>
                                     </div>
@@ -45,7 +45,7 @@
                                 <h6 id="name-heading" class="custom-heading">
                                     성명<span class="highlight-text">*</span>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="form-control name-input" placeholder="이름을 입력하세요." name="LeaderName">
+                                        <input type="text" class="form-control" id="form-control name-input" [placeholder]="leaderNameValue ? leaderNameValue : '이름을 입력하세요.'" name="LeaderName">
                                     </div>
                                 </h6>
                             </div>
