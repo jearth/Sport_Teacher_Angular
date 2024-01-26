@@ -90,8 +90,7 @@
     padding: 0;
     margin: 0;
     position: absolute;
-    top: 30%;
-    display: none;
+    top: 29%;
     box-sizing: border-box;
 }
 
@@ -169,7 +168,7 @@
     margin-top: 16px;
     margin-left: 60px;
     width: 1280px;
-    height: 680px;
+    height: 725px;
     border: 2px solid #EEEEEE;
     background-color: #ffffff;
     border-radius: 0.5em;
@@ -319,6 +318,27 @@
     margin: 20px;
 } */
 
+.mat-mdc-checkbox.mat-primary {
+    --mdc-checkbox-disabled-selected-icon-color: rgba(255, 255, 255, 0.38);
+    --mdc-checkbox-disabled-unselected-icon-color: rgba(255, 255, 255, 0.38);
+    --mdc-checkbox-selected-checkmark-color: #fff;
+    --mdc-checkbox-selected-focus-icon-color: #0F2D6A;
+    --mdc-checkbox-selected-hover-icon-color: #0F2D6A;
+    --mdc-checkbox-selected-icon-color: #0F2D6A;
+    --mdc-checkbox-selected-pressed-icon-color: #0F2D6A;
+    --mdc-checkbox-unselected-focus-icon-color: #DDDDDD;
+    --mdc-checkbox-unselected-hover-icon-color: #DDDDDD;
+    --mdc-checkbox-unselected-icon-color: #dadada;
+    --mdc-checkbox-unselected-pressed-icon-color: #dadada;
+    --mdc-checkbox-selected-focus-state-layer-color: #0F2D6A;
+    --mdc-checkbox-selected-hover-state-layer-color: #0F2D6A;
+    --mdc-checkbox-selected-pressed-state-layer-color: #0F2D6A;
+    --mdc-checkbox-unselected-focus-state-layer-color: white;
+    --mdc-checkbox-unselected-hover-state-layer-color: white;
+    --mdc-checkbox-unselected-pressed-state-layer-color: white;
+}
+  
+  
 table {
     font-size: 13px;
     background-color: white;
@@ -332,17 +352,16 @@ th {
     font-size: 15px;
     text-align: center;
     color: black;
+    font-weight: bold;
     background-color: #FBFBFB;
     padding-right: 15px;
 }
 
 td {
     font-size: 14px;
-    font-weight: bold;
     text-align: center;
     border-bottom: 1px solid #EEEEEE;
     color: black;
-    padding-right: 15px;
 }
 
 .detail-link{
@@ -356,11 +375,34 @@ td {
     font-weight: bold;
     text-decoration: none;
 }
+
 /* ---------------------------------------- */
 
-.pagination a {
+.pagination {
+    margin-top: 10px;
     color: #0F2D6A;
     border: #ffffff;
     font-weight: bold;
     font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.pagination-button {
+    font-size: 14px;
+    cursor: pointer;
+    gap: 10px;
+}
+
+.pagination button:hover {
+    background-color: #0F2D6A !important;
+    color: white;
+    border: 0;
+    outline: 0;
+}
+  
+.pagination button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
 }

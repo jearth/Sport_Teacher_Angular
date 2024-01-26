@@ -32,6 +32,11 @@ export class GeneralService {
   getDetails(leaderNo: string): Observable<LeaderInfoDetailDTO> {
     return this.http.get<LeaderInfoDetailDTO>(`${this.ROOT_URL}/Home/DetailInfo?leaderNo=${leaderNo}`);
   }
+
+  // edit 페이지에서 쓰일 데이터 가져오기
+  getEdits(leaderNo: string): Observable<LeaderInfoDetailDTO> {
+    return this.http.get<LeaderInfoDetailDTO>(`${this.ROOT_URL}/Home/Edit?leaderNo=${leaderNo}`);
+  }
   
   // 지도자 식별 코드 보내기
   private selectedLeaderNo: string | undefined;

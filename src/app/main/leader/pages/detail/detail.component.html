@@ -110,7 +110,7 @@
         </h4>
         <div class="button-box">
             <div class="button main" routerLink="/">목록으로</div>
-            <div class="button change" id="editButton">수정하기</div>
+            <div class="button change" id="editButton" [routerLink]="['/edit']" [queryParams]="{leaderNo: leaderInfo.leaderNo}">수정하기</div>
         </div>
     </div>
 </div>

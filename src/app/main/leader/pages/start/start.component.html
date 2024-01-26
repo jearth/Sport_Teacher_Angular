@@ -3,22 +3,22 @@
     <div class="container" id="search-container">
         <h6>검색 조회</h6>
         <div class="search-box">
-            <div class="select">
-                <div class="selected" (click)="toggleOptions()">
+            <div class="select" (click)="toggleOptionList()">
+                <div class="selected">
                     <div class="selected-value">{{ selectedOption }}</div>
                     <div class="arrow"></div>
                 </div>
-                <ul *ngIf="showOptions">
+                <ul *ngIf="OptionListOpen">
                     <li class="option" (click)="selectOption('전체')">전체</li>
                     <li class="option" (click)="selectOption('이름')">이름</li>
                     <li class="option" (click)="selectOption('종목')">종목</li>
                 </ul>
             </div>
             <div class="input-box">
-                <input type="text" placeholder="이름을 입력해주세요." id="searchInput">
+                <input type="text" placeholder="이름을 입력해주세요." id="searchInput" [(ngModel)]="searchText">
             </div>
             <div class="button-box">
-                <div class="search-button" (click)="search()">검색하기</div>
+                <div class="search-button"  (click)="searchLeaders()">검색하기</div>
             </div>
         </div>
     </div>
@@ -27,7 +27,7 @@
             <div class="content-header">
                 <h5>
                     전체 지도자 목록
-                    <p id="totalleader">총 {{ leaderDTO.length }}명</p>
+                    <p id="totalleader">총 {{ tableDate.length }}명</p>
                 </h5>
                 <div class="button-box">
                     <div class="button register">
@@ -60,45 +60,56 @@
                     </tr>
                 </table>
             </div> -->
-            <div class="mat-elevation-z0">    
-                <table mat-table [dataSource]="leaderDTO">
+            <section class="mat-elevation-z0">    
+                <table mat-table [dataSource]="paginationTableData">
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef>
-                            <mat-checkbox (change)="toggleAll()" [checked]="selectedRows.size === leaderDTO.length"></mat-checkbox>
+                            <mat-checkbox color="primary" (change)="toggleAll()" [checked]="selectedRows.size === leaderDTO.length"></mat-checkbox>
                             번호
                         </th>
                         <td mat-cell *matCellDef="let element; let i = index">
-                            <mat-checkbox (change)="toggleCheckbox(i)" [checked]="selectedRows.has(i)"></mat-checkbox>
-                            {{ i + 1 }}
-                        </td>
+                            <mat-checkbox color="primary" (change)="toggleCheckbox(i)" [checked]="selectedRows.has(i)"></mat-checkbox>
+                            {{ (currentPage - 1) * itemsPerPage + i + 1 }}
+                          </td>
                     </ng-container>
                     <ng-container matColumnDef="leaderNo">
-                    <th mat-header-cell *matHeaderCellDef> 식별코드 </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> 식별코드 </th>
                     <td mat-cell *matCellDef="let element"> {{ element.leaderNo }} </td>
                     </ng-container>
                     <ng-container matColumnDef="leaderName">
-                        <th mat-header-cell *matHeaderCellDef> 이름 </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> 이름 </th>
                         <td mat-cell *matCellDef="let element"> {{element.leaderName}} </td>
                     </ng-container>
                     <ng-container matColumnDef="sportName">
-                    <th mat-header-cell *matHeaderCellDef> 종목 </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> 종목 </th>
                     <td mat-cell *matCellDef="let element"> {{element.sportName}} </td>
                     </ng-container>
                     <ng-container matColumnDef="schoolName">
-                    <th mat-header-cell *matHeaderCellDef> 소속학교 </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> 소속학교 </th>
                     <td mat-cell *matCellDef="let element"> {{element.schoolName}} </td>
                     </ng-container>
                     <ng-container matColumnDef="detailInfo">
-                        <th mat-header-cell *matHeaderCellDef> 이력 정보 상세 </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> 이력 정보 상세 </th>
                         <td mat-cell *matCellDef="let element">
                         <a class="detail-link" [routerLink]="['/detail']" [queryParams]="{leaderNo: element.leaderNo}" >상세보기</a>
                         </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <ng-container *ngIf="paginationTableData.length === 0;">
+                        <td colspan="6" class="no-results-message">
+                            검색된 결과가 없습니다.
+                        </td>
+                    </ng-container>
                 </table>
-                <mat-paginator [pageSize]="5"></mat-paginator>
-            </div>
+                <div class="pagination">
+                    <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" style="border: none; background-color: #FFFFFF;"><</button>
+                    <ng-container *ngFor="let page of getNextPages()">
+                      <button (click)="onPageChange(page)" [disabled]="currentPage === page"  style="border: none; background-color: #FFFFFF; margin-left: 10px;">{{ page }}</button>
+                    </ng-container>
+                    <button (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === getTotalPages()" style="border: none; background-color: #FFFFFF;margin-left: 10px;">></button>
+                </div>
+            </section>
         </div>
     </div>
 </div>

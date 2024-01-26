@@ -8,13 +8,12 @@ import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 
-
-
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
-  styleUrls: ['./start.component.css'],
+  styleUrls: ['./start.component.css']
 })
+
 export class StartComponent {
   constructor(
     private generalService: GeneralService, 
@@ -22,23 +21,30 @@ export class StartComponent {
     }
 
   leaderDTO: LeaderDTO[] = [];
+  tableDate: LeaderDTO[] = [];
   displayedColumns: string[] = ['position', 'leaderNo', 'leaderName', 'sportName', 'schoolName', 'detailInfo'];
-  dataSource = new MatTableDataSource<LeaderDTO>();
+  dataSource = new MatTableDataSource<LeaderDTO>(this.leaderDTO);
+  itemsPerPage: number = 10; 
+  currentPage: number = 1;  
 
-  searchQuery: string = '';
   selectedRows: Set<number> = new Set<number>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  selectedOption: string = '전체';
+  OptionListOpen: boolean = false;
+
   ngOnInit(): void {
     this.loadData();
+    this.dataSource.paginator = this.paginator;
   }
-  
+
   loadData(): void {
     this.generalService.getLeaders().subscribe(
       (data: LeaderDTO[]) => {
         console.log('서버 응답:', data);
         this.leaderDTO = data;
-        this.dataSource.data = this.leaderDTO;
+        this.tableDate = [...this.leaderDTO];
+        this.dataSource = new MatTableDataSource<LeaderDTO>(this.leaderDTO);
         this.dataSource.paginator = this.paginator;
       },
       (error) => {
@@ -47,6 +53,52 @@ export class StartComponent {
     );
   }
 
+  // 옵션 열기
+  toggleOptionList(): void {
+    this.OptionListOpen = !this.OptionListOpen;
+  }
+  
+  // 옵션 선택하기
+  selectOption(option: string): void {
+    this.selectedOption = option;
+    this.OptionListOpen = true;
+  }
+
+  searchText: string = '';
+  
+  searchLeaders(): void {
+    let filteredData: LeaderDTO[];
+  
+    if (this.selectedOption === '전체' && this.searchText.trim() === '') {
+      // 전체를 선택하고 검색어가 없으면 모든 데이터 보여줌
+      filteredData = this.leaderDTO;
+    } else {
+      // 검색어가 있는 경우, leaderDTO에서 필터링하여 검색 결과를 얻음
+      filteredData = this.leaderDTO.filter(leader => {
+        const searchCondition =
+          (this.selectedOption === '이름' && leader?.leaderName?.includes(this.searchText)) ||
+          (this.selectedOption === '종목' && leader?.sportName?.includes(this.searchText)) ||
+          (this.selectedOption === '전체' &&
+            (leader?.leaderName?.includes(this.searchText) || leader?.sportName?.includes(this.searchText)));
+  
+        return this.searchText.trim() !== '' && searchCondition;
+      });
+    }
+
+    // 검색된 데이터를 tableDate에 할당
+    this.tableDate = filteredData;
+    
+    // 검색된 데이터를 dataSource에 할당하여 테이블 갱신
+    this.dataSource.data = this.tableDate;
+    
+    // 검색 결과 및 정보 출력
+    console.log('검색어:', this.searchText);
+    console.log('검색 옵션:', this.selectedOption);
+    console.log('검색 결과:', this.tableDate);
+    
+  }
+  
+  
   // 삭제 값 선택 에러 모달창 열기
   openStartDeleteErrorModal(): void {
     const dialogRef = this.dialog.open(AlertErrorComponent, {
@@ -72,6 +124,7 @@ export class StartComponent {
     }
   }
 
+  // 개별 선택 박스
   toggleCheckbox(index: number): void {
     if (this.selectedRows.has(index)) {
       this.selectedRows.delete(index);
@@ -80,6 +133,7 @@ export class StartComponent {
     }
   }
 
+  // 전체 선택 박스
   toggleAll(): void {
     if (this.selectedRows.size === this.leaderDTO.length) {
       this.selectedRows.clear();
@@ -89,11 +143,48 @@ export class StartComponent {
       }
     }
   }
+
+  get paginationTableData(): LeaderDTO[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
   
-  // // 페이지네이션 초기화 설정
-  // ngAfterViewInit() {
-  // this.dataSource.paginator = this.paginator;
-  // this.paginator.pageSize = 5;
-  // }
+    // 검색 결과가 있을 때만 페이지 데이터 반환
+    if (this.tableDate.length > 0) {
+      return this.tableDate.slice(startIndex, endIndex);
+    } else {
+      return [];
+    }
+  }
   
+  // 페이지 변경 시 초기화
+  onPageChange(event: any): void {
+    this.currentPage = event;
+  
+    // 검색 결과가 없으면 페이지를 1로 초기화
+    if (this.tableDate.length === 0) {
+      this.currentPage = 1;
+    }
+  
+    this.getTotalPages();
+  }
+
+  getNextPages(): number[] {
+    const visiblePages: number[] = [];
+  
+    const totalPages = this.getTotalPages();
+    const startPage = Math.max(1, this.currentPage - 2); // 시작 페이지
+    const endPage = Math.min(startPage + 4, totalPages); // 종료 페이지
+  
+    for (let page = startPage; page <= endPage; page++) {
+      visiblePages.push(page);
+    }
+  
+    return visiblePages;
+  }
+
+  // 페이지 수 계산
+  getTotalPages(): number {
+    return Math.ceil(this.tableDate.length / this.itemsPerPage);
+  }
+
 }

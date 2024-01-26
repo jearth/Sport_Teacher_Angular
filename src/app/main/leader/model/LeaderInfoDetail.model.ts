@@ -13,6 +13,9 @@ export class LeaderInfoDetailDTO {
     gender?: string;
     telNo?: string;
     empDT?: Date;
+    tel1?: string;
+    tel2?: string;
+    tel3?: string;
     work?: Work[];
     certificate?: Certificate[];
 }
