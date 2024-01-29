@@ -28,6 +28,11 @@ export class GeneralService {
     return this.http.get<LeaderDTO[]>(`${this.ROOT_URL}/Home/StartInfo`);
   }
 
+  // start 페이지에서 삭제할 떄 쓰이는
+  deleteLeaders(): Observable<LeaderDTO[]> {
+    return this.http.delete<LeaderDTO[]>(`${this.ROOT_URL}/Home/Remove`);
+  }
+
   // detail 페이지에서 쓰일 데이터 가져오기
   getDetails(leaderNo: string): Observable<LeaderInfoDetailDTO> {
     return this.http.get<LeaderInfoDetailDTO>(`${this.ROOT_URL}/Home/DetailInfo?leaderNo=${leaderNo}`);
@@ -35,7 +40,7 @@ export class GeneralService {
 
   // edit 페이지에서 쓰일 데이터 가져오기
   getEdits(leaderNo: string): Observable<LeaderInfoDetailDTO> {
-    return this.http.get<LeaderInfoDetailDTO>(`${this.ROOT_URL}/Home/Edit?leaderNo=${leaderNo}`);
+    return this.http.get<LeaderInfoDetailDTO>(`${this.ROOT_URL}/Home/EditInfo?leaderNo=${leaderNo}`);
   }
   
   // 지도자 식별 코드 보내기

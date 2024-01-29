@@ -1,9 +1,9 @@
 <div id="alertPopup" class="popup"> 
     <h2>{{data.title}}</h2>
-    <span class="close" (click)="closeDialog()">&times;</span>
+    <span class="close" (click)="closeDialog(false)">&times;</span>
     <div class="custom-dialog-content">
         <mat-dialog-content [innerHTML]="data.content"></mat-dialog-content>
     </div>
-    <button class="cancel" (click)="closeDialog()">취소</button>
-    <button class="confirm" (click)="confirmAction()">확인</button>
+    <button class="cancel" (click)="closeDialog(false)">취소</button>
+    <button class="confirm" (click)="closeDialog(true)">확인</button>
 </div>

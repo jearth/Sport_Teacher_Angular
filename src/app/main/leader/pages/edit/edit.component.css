@@ -10,7 +10,7 @@
     margin-left: 60px;
     margin-bottom: 156px;
     width: 1300px;
-    height: 1200px;
+    height: 1300px;
     border: 2px solid #EEEEEE;
     background-color: #ffffff;
     border-radius: 0.5em;
@@ -50,19 +50,15 @@
 
 /* ------------------------------------------ */
 
-#register-container #image-container {
+#image-container {
     position: relative;
-    width: 300px;
-    height: 300px;
 }
 
-#register-container #image-placeholder {
-    margin-top: 5px;
+#register-container #ImageBase-data {
+    display: block;
     margin-left: 35px;
     width: 243px;
     height: 315px;
-    background-color: #ccc;
-    top: 0;
     left: 10;
     cursor: pointer;
     border-radius: 0.5em;
@@ -71,8 +67,10 @@
 }
 
 #register-container #upload-button {
-    margin-top: 242px;
-    margin-left: 17px;
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    margin-left: 57px;
     width: 203px;
     height: 47px;
     padding-top: 10px;
@@ -438,9 +436,14 @@ input[name="tel3"].custom-input {
     border-radius: 0.2em;
 }
 
-#register-container .History-section-heading button.History-delete,
-#register-container .Certificate-section-heading button.Certificate-delete {
+#register-container .History-section-heading button.delete-button,
+#register-container .Certificate-section-heading button.delete-button {
     background-color: #969696;
+}
+
+#register-container .Certificate-section-heading button.delete-button,
+#register-container .Certificate-section-heading button.add-button {
+    margin-left: 10px;
 }
 
 #register-container .Certificate-section-heading button.Certificate-add {
@@ -495,6 +498,7 @@ input[name="tel3"].custom-input {
     padding-left: 38px;
     padding-top: 15px;
 }
+
 
 /* --------------------------------------- */
 

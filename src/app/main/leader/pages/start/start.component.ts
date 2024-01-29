@@ -7,6 +7,7 @@ import { GeneralService } from '../../services/general.service';
 import { MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-start',
@@ -17,8 +18,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class StartComponent {
   constructor(
     private generalService: GeneralService, 
-    public dialog: MatDialog) { 
-    }
+    public dialog: MatDialog,
+    private http: HttpClient) { 
+  }
 
   leaderDTO: LeaderDTO[] = [];
   tableDate: LeaderDTO[] = [];
@@ -110,7 +112,7 @@ export class StartComponent {
   // 삭제 모달창 열기
   openStartDeleteModal(): void {
     // 유효성 검사
-    let validateResult: boolean = false;
+    let validateResult: boolean = this.selectedRows.size > 0;
     
     if (!validateResult) {
       this.openStartDeleteErrorModal();
@@ -121,8 +123,37 @@ export class StartComponent {
           content: '지도자를 삭제하시겠습니까? <br>삭제된 지도자는 복구되지 않습니다.'
         }
       });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.deleteSelectedRows();
+        }
+      });
     }
   }
+
+  deleteSelectedRows(): void {
+    const selectedRowsArray = Array.from(this.selectedRows);
+  
+    const idsToDelete = selectedRowsArray.map(rowIndex => this.leaderDTO[rowIndex].leaderNo);
+  
+    this.generalService.deleteLeaders().subscribe(
+      () => {
+        // 서버에서 리더 삭제가 성공하면, 로컬에서도 해당 행을 제거합니다.
+        for (const rowIndex of selectedRowsArray) {
+          this.leaderDTO.splice(rowIndex, 1);
+        }
+        this.selectedRows.clear();
+      },
+      error => {
+        // 삭제 중에 오류가 발생한 경우에 대한 처리 (옵션)
+        console.error('Error during deletion:', error);
+      }
+    );
+  }
+  
+
+  
 
   // 개별 선택 박스
   toggleCheckbox(index: number): void {

@@ -4,10 +4,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { SchoolSearchComponent } from '../../dialogs/school-search/school-search.component';
 import { AlertComponent } from '../../../../utils/alert/alert.component';
 import { AlertErrorComponent } from '../../../../utils/alert-error/alert-error.component';
-import { LeaderInfoDetailDTO } from '../../model/LeaderInfoDetail.model';
 import { ActivatedRoute } from '@angular/router';
 import { GeneralService } from '../../services/general.service';
 import { DatePipe } from '@angular/common';
+import { LeaderInfoEditDTO } from '../../model/LeaderInfoEdit.model';
+import { Conditional } from '@angular/compiler';
 
 @Component({
   selector: 'app-edit',
@@ -15,7 +16,7 @@ import { DatePipe } from '@angular/common';
   styleUrl: './edit.component.css'
 })
 export class EditComponent {
-  leaderInfo: LeaderInfoDetailDTO = new LeaderInfoDetailDTO();
+  leaderEditInfo: LeaderInfoEditDTO = new LeaderInfoEditDTO();
 
   constructor(private route: ActivatedRoute,
     private generalService: GeneralService,
@@ -25,15 +26,31 @@ export class EditComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe((param: any) => {
       this.generalService.getEdits(param.leaderNo).subscribe(
-        (data: LeaderInfoDetailDTO) => {
-          this.leaderInfo = data;
-          console.log('전체 데이터:', this.leaderInfo);
+        (data: LeaderInfoEditDTO) => {
+          this.leaderEditInfo = data;
+          console.log('전체 데이터:', this.leaderEditInfo);
         },
         (error) => {
           console.error('리더 정보를 가져오는 동안 오류가 발생했습니다.', error);
         }
       );
     });
+  }
+
+  // 파일 내용을 읽어와서 base64 형태로 변환하여 leaderEditInfo.imageBase에 저장
+  onFileChange(event: any): void {
+    const inputElement = event.target as HTMLInputElement;
+
+    if (inputElement.files && inputElement.files.length > 0) {
+      const file = inputElement.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.leaderEditInfo.imageBase = reader.result as string;
+      };
+
+      reader.readAsDataURL(file);
+    }
   }
 
   // 식별코드 검색 모달창 열기
@@ -48,40 +65,34 @@ export class EditComponent {
 
   // 근무 이력 테이블 추가
   employmentHistory = [
-    { WorkPlace: '', StartDT: '', EndDT: '', SportNo: '', buttonLabel: '추가' }
+    { WorkPlace: '', StartDT: new Date(), EndDT: new Date(), SportNo: '', buttonLabel: '추가' }
   ];
-  
+
   addHistoryRow() {
-    this.employmentHistory.push({ WorkPlace: '', StartDT: '', EndDT: '', SportNo: '', buttonLabel: '추가' });
-  
-    const HistoryIndex = this.employmentHistory.length - 1;
-    if (HistoryIndex >= 0) {
-      this.employmentHistory[HistoryIndex].buttonLabel = '삭제';
+    const employmentHistory = {workPlace: '', startDT: null, endDT: null, sportName: ''};
+    (this.leaderEditInfo!.work as any[]).push(employmentHistory);
+  }
+
+  deleteHistoryRow(index: number) {
+    if (this.leaderEditInfo) {
+        this.leaderEditInfo.work!.splice(index, 1);
     }
   }
 
-  // 근무 이력 테이블 삭제
-  deleteHistoryRow(index: number) {
-    this.employmentHistory.splice(index, 1);
-  }
-  
   // 자격사항 테이블 추가
   certificateList = [
-    { CertificateName: '', CertificateNumber: '', CertificateDT: '', Origanization: '', buttonLabel: '추가' }
+    { CertificateName: '', CertificateNumber: '', CertificateDT: new Date(), Origanization: '', buttonLabel: '추가' }
   ];
 
-  addCertificateRow(){
-    this.certificateList.push({ CertificateName: '', CertificateNumber: '', CertificateDT: '', Origanization: '', buttonLabel: '추가' });
-
-    const CertificateIndex = this.certificateList.length -1;
-    if (CertificateIndex >= 0) {
-      this.certificateList[CertificateIndex].buttonLabel = '삭제';
-    }
+  addCertificateRow() {
+    const certificateList = {workPlace: '', startDT: null, endDT: null, sportName: ''};
+    (this.leaderEditInfo!.certificate as any[]).push(certificateList);
   }
 
-  // 자격사항 테이블 삭제
   deleteCertificateRow(index: number) {
-    this.certificateList.splice(index, 1);
+    if (this.leaderEditInfo) {
+        this.leaderEditInfo.certificate!.splice(index, 1);
+    }
   }
 
   // 지도자 등록 취소 모달창 열기
@@ -98,6 +109,11 @@ export class EditComponent {
       data: { title: '필수입력값 확인',
               content: '필수입력값이 채워지지 않았습니다. <br> 확인후 채워주시기 바랍니다.' }
     });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (!result) {
+    //     this.
+    //   }
+    // });
   }
 
   // 지도자 등록 모달창 열기
@@ -117,4 +133,5 @@ export class EditComponent {
       });
     }
   }
+
 }

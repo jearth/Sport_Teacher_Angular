@@ -19,12 +19,12 @@ export class AlertComponent {
     private router: Router
   ) {}
 
-  closeDialog() {
-    this.dialogRef.close();
+  closeDialog(bool: boolean) {
+    this.dialogRef.close(bool);
   }
 
-  confirmAction() {
-    this.router.navigate(['/']);
-    this.dialogRef.close();
-  }
+  // confirmAction() {
+  //   this.router.navigate(['/']);
+  //   this.dialogRef.close();
+  // }
 }
