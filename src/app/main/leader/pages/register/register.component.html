@@ -1,20 +1,17 @@
 <h4 class="title-heading">지도자 등록하기</h4>
 <div class="container" id="register-container">
     <div class="d-flex flex-column align-items-center">
-        <form action="" method="post" id="main_form">
+        <form #leaderform="ngForm">
             <h4 class="BasicInfo-section-heading">1. 일반 현황(2023년 01월 01일 기준)<span class="required-field">* 필수입력값 항목입니다.</span><hr class="section-hr"></h4>
             <div class="container custom-container">
                 <div class="row">
                     <div class="col-sm-3 left-content">
                         <div id="image-container">
-                            <label for="file-input" id="image-placeholder">
+                            <label for="file-input" id="image-placeholder" *ngIf="!selectedImageUrl">
                                 <div id="upload-button">사진 첨부하기</div>
                             </label>
-                            <!--프론트 단에서만 필요-->
-                            <input type="file" id="file-input" accept="image/*" value="">
-                            <!--컨트롤러로 보낼 데이터-->
-                            <input type="hidden" id="hidden-input" name="ImageBase" value="">
-                            <img id="selected-image" alt="">
+                            <input type="file" id="file-input" (change)="onFileSelected($event)">
+                            <img id="selected-image" *ngIf="selectedImageUrl" [src]="selectedImageUrl" alt="">
                             <p>파일 크기는 MB 이하로 등록해주세요.</p>
                         </div>
                     </div>
@@ -24,7 +21,7 @@
                                 <h6 id="code-heading" class="custom-heading">
                                     식별코드<span class="highlight-text">*</span>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" [placeholder]="leaderNoValue ? leaderNoValue : '식별코드를 선택해주세요.'" name="LeaderNo">
+                                        <input type="text" class="form-control" [(ngModel)]="leaderInfoDTO.LeaderNo" [ngModelOptions]="{standalone: true}" [placeholder]="leaderNoValue ? leaderNoValue : '식별코드를 선택해주세요.'">
                                         <button class="btn btn-outline-secondary" type="button" id="button-Leader" (click)="openLeaderSearchModal()">식별코드검색</button>
                                     </div>
                                 </h6>
@@ -34,7 +31,7 @@
                                     학교명<span class="highlight-text">*</span>
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control" id="schoolcode-heading" [placeholder]="schoolNameValue ? schoolNameValue : '학교명을 선택해주세요.'" aria-describedby="button-addon-School">
-                                        <input type="hidden" id="hidden-SchoolName" name="SchoolNo" />
+                                        <input type="hidden" id="hidden-SchoolName" [(ngModel)]="leaderInfoDTO.SchoolNo" [ngModelOptions]="{standalone: true}">
                                         <button class="btn btn-outline-secondary" type="button" id="button-addon-School" (click)="openSchoolSearchModal()">학교명검색</button>
                                     </div>
                                 </h6>
@@ -45,7 +42,9 @@
                                 <h6 id="name-heading" class="custom-heading">
                                     성명<span class="highlight-text">*</span>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="form-control name-input" [placeholder]="leaderNameValue ? leaderNameValue : '이름을 입력하세요.'" name="LeaderName">
+                                        <input type="text" class="form-control" id="form-control name-input" 
+                                            [(ngModel)]="leaderInfoDTO.LeaderName" [ngModelOptions]="{standalone: true}" 
+                                            [placeholder]="leaderNameValue ? leaderNameValue : '이름을 입력하세요.'">
                                     </div>
                                 </h6>
                             </div>
@@ -53,7 +52,7 @@
                                 <h6 id="dob-heading" class="custom-heading">
                                     생년월일<span class="highlight-text">*</span>
                                     <div class="mb-3">
-                                        <input type="date" class="form-control" id="birthdate" data-placeholder="생년월일을 입력해주세요." name="Birthday">
+                                        <input type="date" class="form-control" [(ngModel)]="leaderInfoDTO.Birthday" [ngModelOptions]="{standalone: true}" data-placeholder="생년월일을 입력해주세요." name="Birthday">
                                     </div>
                                 </h6>
                             </div>
@@ -62,11 +61,11 @@
                                     성별<span class="highlight-text">*</span>
                                     <div class="gender-checkboxes">
                                         <label>
-                                            <input type="radio" name="Gender" value="M" checked>
+                                            <input type="radio" [(ngModel)]="leaderInfoDTO.Gender" [ngModelOptions]="{standalone: true}" value="M" checked>
                                             남자
                                         </label>
                                         <label>
-                                            <input type="radio" name="Gender" value="W">
+                                            <input type="radio" [(ngModel)]="leaderInfoDTO.Gender" [ngModelOptions]="{standalone: true}" value="W">
                                             여자
                                         </label>
                                     </div>
@@ -78,7 +77,7 @@
                                 <h6 id="sport-heading" class="custom-heading">
                                     종목<span class="highlight-text">*</span>
                                     <div class="sport-select">
-                                        <select class="form-select" aria-label="종목을 선택해주세요." id="sport-select-register-container" name="SportNo">
+                                        <select class="form-select" aria-label="종목을 선택해주세요." id="sport-select-register-container" [(ngModel)]="leaderInfoDTO.SportNo" [ngModelOptions]="{standalone: true}">
                                             <option value="">종목을 선택해주세요.</option>
                                             <option *ngFor="let Sport of leaderDetailDTO.sports" [value]="Sport.sportNo">{{ Sport.sportName }}</option>
                                         </select>
@@ -86,22 +85,23 @@
                                 </h6>
                             </div>
                             <div class="col-4 col-sm-4">
-                                <h6 id="phone-heading" class="custom-heading">근무지 전화번호<span class="highlight-text">*</span>
-                                <div class="d-inline-flex" id="tel-heading">
-                                    <input type="tel" size="3" name="tel1" class="form-control custom-input" placeholder="063" maxlength="3">
+                                <h6 id="phone-heading" class="custom-heading">
+                                  근무지 전화번호<span class="highlight-text">*</span>
+                                  <div class="d-inline-flex" id="tel-heading">
+                                    <input type="tel" size="3" name="tel1" class="form-control custom-input" placeholder="063" maxlength="3" [(ngModel)]="leaderInfoDTO.tel1" [ngModelOptions]="{standalone: true}">
                                     <span class="dash">-</span>
-                                    <input type="tel" size="4" name="tel2" class="form-control custom-input" placeholder="1234" maxlength="4">
+                                    <input type="tel" size="4" name="tel2" class="form-control custom-input" placeholder="1234" maxlength="4" [(ngModel)]="leaderInfoDTO.tel2" [ngModelOptions]="{standalone: true}">
                                     <span class="dash">-</span>
-                                    <input type="tel" size="4" name="tel3" class="form-control custom-input" placeholder="5678" maxlength="4">
-                                    <input type="hidden" name="TelNo" id="hidden-tel">
-                                </div>
+                                    <input type="tel" size="4" name="tel3" class="form-control custom-input" placeholder="5678" maxlength="4" [(ngModel)]="leaderInfoDTO.tel3" [ngModelOptions]="{standalone: true}">
+                                    <input type="hidden" id="hidden-tel" [(ngModel)]="leaderInfoDTO.TelNo" [ngModelOptions]="{standalone: true}">
+                                  </div>
                                 </h6>
-                            </div>
+                              </div>
                             <div class="col-4 col-sm-4">
                                 <h6 id="hire-date-heading" class="custom-heading">
                                     최초채용<span class="highlight-text">*</span>
                                     <div class="mb-3">
-                                        <input type="date" class="form-control" id="hire" data-placeholder="최초채용일을 선택해주세요." name="EmpDT">
+                                        <input type="date" class="form-control" id="hire" [(ngModel)]="leaderInfoDTO.EmpDT" [ngModelOptions]="{standalone: true}" data-placeholder="최초채용일을 선택해주세요.">
                                         <p>최초 채용일은 <span class="highlight-text">전라북도 교육청 소속 최초 채용일을</span> 선택해주세요.</p>
                                     </div>
                                 </h6>
@@ -159,8 +159,8 @@
                 </table>
             </h4>
             <div class="button-box">
-                <div class="button delete" (click)="openRegisterCancelModal()">취소하기</div>
-                <div id="register" class="button register" name="submit" (click)="openRegisterSuccessModal()">등록하기</div>
+                <button class="button delete" (click)="openRegisterCancelModal()">취소하기</button>
+                <button type="button" id="register" class="button register" name="submit" (click)="openRegisterSuccessModal()">등록하기</button>
             </div>
         </form>
     </div>

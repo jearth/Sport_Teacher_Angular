@@ -12,3 +12,11 @@ export class WorkDetail {
     sportNo?: string;
     sportName?: string;
 }
+
+export class WorkRegister {
+    WorkPlace?: string;
+    StartDT?: Date;
+    EndDT?: Date;
+    SportNo?: string;
+    SportName?: string;
+}

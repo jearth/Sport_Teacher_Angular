@@ -85,7 +85,6 @@
 }
 
 #register-container #selected-image {
-    top: 0;
     left: 10;
     display: flex;
     align-items: center;
@@ -95,7 +94,6 @@
     width: 243px;
     height: 315px;
     border-radius: 0.5em;
-    display: none;
 }
 
 #register-container #image-container p {

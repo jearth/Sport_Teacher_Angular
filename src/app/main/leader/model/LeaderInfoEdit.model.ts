@@ -1,6 +1,8 @@
 import { Certificate } from "./Certificate.model";
+import { CertificateRegister } from "./Certificate.model";
 import { School } from "./School.model";
 import { Sport } from "./Sport.model";
+import { WorkRegister } from "./Work.model";
 import { Work } from "./Work.model";
 
 export class LeaderInfoEditDTO {
@@ -22,4 +24,23 @@ export class LeaderInfoEditDTO {
     certificate?: Certificate[];
     sports?: Sport[];
     schools?: School[];
+}
+
+export class LeaderInfoDTO {
+    ImageBase?: string;
+    LeaderNo?: string;
+    LeaderName?: string;
+    SportName?: string;
+    SportNo?: string;
+    SchoolName?: string;
+    SchoolNo?: string;
+    Birthday?: Date;
+    Gender?: string;
+    TelNo?: string;
+    tel1?: string;
+    tel2?: string;
+    tel3?: string;
+    EmpDT?: Date;
+    Work?: WorkRegister[];
+    Certificate?: CertificateRegister[];
 }

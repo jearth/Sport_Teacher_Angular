@@ -100,7 +100,6 @@ export class StartComponent {
     
   }
   
-  
   // 삭제 값 선택 에러 모달창 열기
   openStartDeleteErrorModal(): void {
     const dialogRef = this.dialog.open(AlertErrorComponent, {
@@ -109,7 +108,6 @@ export class StartComponent {
     });
   }
 
-  // 삭제 모달창 열기
   openStartDeleteModal(): void {
     // 유효성 검사
     let validateResult: boolean = this.selectedRows.size > 0;
@@ -117,44 +115,44 @@ export class StartComponent {
     if (!validateResult) {
       this.openStartDeleteErrorModal();
     } else {
+      const leaderNoToDelete: string[] = [];
+  
+      // 선택된 행들의 leaderNo를 배열에 추가하기
+      this.selectedRows.forEach(index => {
+        const leaderNo = this.leaderDTO[index]?.leaderNo;
+        if (leaderNo) {
+          leaderNoToDelete.push(leaderNo);
+        }
+      });
+  
       const dialogRef = this.dialog.open(AlertComponent, {
         data: {
           title: '지도자 삭제',
           content: '지도자를 삭제하시겠습니까? <br>삭제된 지도자는 복구되지 않습니다.'
         }
       });
-
+  
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.deleteSelectedRows();
+          this.deleteSelectedRows(leaderNoToDelete);
         }
       });
     }
   }
-
-  deleteSelectedRows(): void {
-    const selectedRowsArray = Array.from(this.selectedRows);
   
-    const idsToDelete = selectedRowsArray.map(rowIndex => this.leaderDTO[rowIndex].leaderNo);
-  
-    this.generalService.deleteLeaders().subscribe(
-      () => {
-        // 서버에서 리더 삭제가 성공하면, 로컬에서도 해당 행을 제거합니다.
-        for (const rowIndex of selectedRowsArray) {
-          this.leaderDTO.splice(rowIndex, 1);
-        }
-        this.selectedRows.clear();
+  deleteSelectedRows(leaderNo: string[]) {
+    this.generalService.removeLeaders(leaderNo).subscribe({
+      next: (res: any) => {
+        this.leaderDTO = this.leaderDTO.filter(
+          generalService => generalService.leaderNo && !leaderNo.includes(generalService.leaderNo)
+          
+        );
       },
-      error => {
-        // 삭제 중에 오류가 발생한 경우에 대한 처리 (옵션)
-        console.error('Error during deletion:', error);
-      }
-    );
+      error: (error: any) => console.error('[GeneralService.remove]', error)
+    });
   }
   
-
   
-
   // 개별 선택 박스
   toggleCheckbox(index: number): void {
     if (this.selectedRows.has(index)) {

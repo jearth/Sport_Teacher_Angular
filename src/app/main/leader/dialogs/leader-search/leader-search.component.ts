@@ -46,6 +46,8 @@ export class LeaderSearchComponent {
 
   closeLeaderSearchModal(): void {
     this.generalService.setSelectedLeaderNo(this.selectedLeader);
+    console.log('Selected Leader:', this.selectedLeader);
+
     this.dialogRef.close({
       leaderNo: this.selectedLeader ? this.selectedLeader.leaderNo : null,
       leaderName: this.selectedLeader ? this.selectedLeader.leaderName : null

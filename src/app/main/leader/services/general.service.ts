@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, throwError } from 'rxjs';
 import { Sport } from '../model/Sport.model';
 import { LeaderDetailDTO } from '../model/LeaderDetail.model';
 import { LeaderDTO } from '../model/Leader.model';
 import { LeaderInfoDetailDTO } from '../model/LeaderInfoDetail.model';
+import { LeaderInfoDTO } from '../model/LeaderInfoEdit.model';
 
 // 서비스는 어플리케이션의 비즈니스 로직, 데이터를 처리할 때 사용함
   // 컴포넌트 간에 데이터를 공유하거나, 외부 서버와 통신할 때 사용함
@@ -29,9 +30,17 @@ export class GeneralService {
   }
 
   // start 페이지에서 삭제할 떄 쓰이는
-  deleteLeaders(): Observable<LeaderDTO[]> {
-    return this.http.delete<LeaderDTO[]>(`${this.ROOT_URL}/Home/Remove`);
-  }
+  // deleteLeaders(): Observable<LeaderDTO[]> {
+  //   return this.http.delete<LeaderDTO[]>(`${this.ROOT_URL}/Home/Remove`);
+  // }
+  
+  // removeLeaders 메서드 수정
+  removeLeaders(leaderNos: string[]): Observable<any> {
+    const url = `${this.ROOT_URL}/Home/Remove`;
+    const options = { body: leaderNos};
+    
+    return this.http.delete(url, options).pipe(catchError(this.handleError));
+  } 
 
   // detail 페이지에서 쓰일 데이터 가져오기
   getDetails(leaderNo: string): Observable<LeaderInfoDetailDTO> {
@@ -41,6 +50,11 @@ export class GeneralService {
   // edit 페이지에서 쓰일 데이터 가져오기
   getEdits(leaderNo: string): Observable<LeaderInfoDetailDTO> {
     return this.http.get<LeaderInfoDetailDTO>(`${this.ROOT_URL}/Home/EditInfo?leaderNo=${leaderNo}`);
+  }
+
+  // leader 등록하기
+  postLeaders(leaderData: LeaderInfoDTO): Observable<LeaderInfoDTO> {
+    return this.http.post<LeaderInfoDTO>(`${this.ROOT_URL}/Home/Register`, leaderData);
   }
   
   // 지도자 식별 코드 보내기
@@ -63,5 +77,22 @@ export class GeneralService {
 
   setSelectedSchoolNo(schoolNo: string): void {
     this.selectedSchoolNo = schoolNo;
+  }
+
+  // 에러 핸들러 함수
+  private handleError(error: HttpErrorResponse) {
+    let message = '';
+    if (error.error instanceof ErrorEvent) {
+      console.error(`Client-side error: ${error.error.message}`);
+    }
+    else {
+      console.error(`Server-side error: ${error.status}`);
+      message = error.message;
+    }
+
+    return throwError({
+      title: 'Something wrong! please try again later.',
+      message
+    });
   }
 }
