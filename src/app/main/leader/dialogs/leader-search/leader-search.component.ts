@@ -49,8 +49,8 @@ export class LeaderSearchComponent {
     console.log('Selected Leader:', this.selectedLeader);
 
     this.dialogRef.close({
-      leaderNo: this.selectedLeader ? this.selectedLeader.leaderNo : null,
-      leaderName: this.selectedLeader ? this.selectedLeader.leaderName : null
+      LeaderNo: this.selectedLeader ? this.selectedLeader.leaderNo : null,
+      LeaderName: this.selectedLeader ? this.selectedLeader.leaderName : null
     });
   }
   

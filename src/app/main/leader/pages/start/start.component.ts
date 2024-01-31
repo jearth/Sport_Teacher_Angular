@@ -19,7 +19,8 @@ export class StartComponent {
   constructor(
     private generalService: GeneralService, 
     public dialog: MatDialog,
-    private http: HttpClient) { 
+    private http: HttpClient,
+    private router: Router) { 
   }
 
   leaderDTO: LeaderDTO[] = [];
@@ -91,13 +92,7 @@ export class StartComponent {
     this.tableDate = filteredData;
     
     // 검색된 데이터를 dataSource에 할당하여 테이블 갱신
-    this.dataSource.data = this.tableDate;
-    
-    // 검색 결과 및 정보 출력
-    console.log('검색어:', this.searchText);
-    console.log('검색 옵션:', this.selectedOption);
-    console.log('검색 결과:', this.tableDate);
-    
+    this.dataSource.data = this.tableDate; 
   }
   
   // 삭제 값 선택 에러 모달창 열기
@@ -145,8 +140,11 @@ export class StartComponent {
       next: (res: any) => {
         this.leaderDTO = this.leaderDTO.filter(
           generalService => generalService.leaderNo && !leaderNo.includes(generalService.leaderNo)
-          
         );
+
+        this.selectedRows.clear();
+
+        this.loadData();
       },
       error: (error: any) => console.error('[GeneralService.remove]', error)
     });

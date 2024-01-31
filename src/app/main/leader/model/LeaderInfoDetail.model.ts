@@ -1,5 +1,5 @@
-import { Certificate } from "./Certificate.model";
-import { Work } from "./Work.model";
+import { Certificate, CertificateDTO } from "./Certificate.model";
+import { Work, WorkDetailDTO } from "./Work.model";
 
 export class LeaderInfoDetailDTO {
     imageBase?: string;

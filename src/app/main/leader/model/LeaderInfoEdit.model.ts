@@ -37,9 +37,6 @@ export class LeaderInfoDTO {
     Birthday?: Date;
     Gender?: string;
     TelNo?: string;
-    tel1?: string;
-    tel2?: string;
-    tel3?: string;
     EmpDT?: Date;
     Work?: WorkRegister[];
     Certificate?: CertificateRegister[];

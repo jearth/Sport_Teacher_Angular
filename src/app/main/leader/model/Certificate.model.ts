@@ -5,6 +5,13 @@ export class Certificate {
     origanization?: string;
 }
 
+export class CertificateDTO {
+    CertificateName?: string;
+    CertificateNumber?: string;
+    CertificateDT?: Date;
+    Origanization?: string;
+}
+
 export class CertificateRegister {
     CertificateName?: string;
     CertificateNumber?: string;

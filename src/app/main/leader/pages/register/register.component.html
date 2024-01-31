@@ -88,15 +88,16 @@
                                 <h6 id="phone-heading" class="custom-heading">
                                   근무지 전화번호<span class="highlight-text">*</span>
                                   <div class="d-inline-flex" id="tel-heading">
-                                    <input type="tel" size="3" name="tel1" class="form-control custom-input" placeholder="063" maxlength="3" [(ngModel)]="leaderInfoDTO.tel1" [ngModelOptions]="{standalone: true}">
+                                    <input type="tel" size="3" name="tel1" [(ngModel)]="tel1" class="form-control custom-input" placeholder="063" maxlength="3" (input)="calculateTelNo()">
                                     <span class="dash">-</span>
-                                    <input type="tel" size="4" name="tel2" class="form-control custom-input" placeholder="1234" maxlength="4" [(ngModel)]="leaderInfoDTO.tel2" [ngModelOptions]="{standalone: true}">
+                                    <input type="tel" size="4" name="tel2" [(ngModel)]="tel2" class="form-control custom-input" placeholder="1234" maxlength="4" (input)="calculateTelNo()">
                                     <span class="dash">-</span>
-                                    <input type="tel" size="4" name="tel3" class="form-control custom-input" placeholder="5678" maxlength="4" [(ngModel)]="leaderInfoDTO.tel3" [ngModelOptions]="{standalone: true}">
-                                    <input type="hidden" id="hidden-tel" [(ngModel)]="leaderInfoDTO.TelNo" [ngModelOptions]="{standalone: true}">
+                                    <input type="tel" size="4" name="tel3" [(ngModel)]="tel3" class="form-control custom-input" placeholder="5678" maxlength="4" (input)="calculateTelNo()">
+                                    <input type="hidden" id="hidden-tel" name="hiddenTel" [(ngModel)]="leaderInfoDTO.TelNo">
                                   </div>
                                 </h6>
-                              </div>
+                            </div>
+                              
                             <div class="col-4 col-sm-4">
                                 <h6 id="hire-date-heading" class="custom-heading">
                                     최초채용<span class="highlight-text">*</span>
@@ -120,7 +121,7 @@
                         <th>근무종료일</th>
                         <th>종목</th>
                     </tr>
-                    <tr *ngFor="let work of employmentHistory; let i = index" class="Employment-History-Tr">
+                    <tr *ngFor="let work of leaderInfoDTO.Work; let i = index" class="Employment-History-Tr">
                         <td><input type="text" class="school-name" placeholder="학교명을 입력해주세요." [(ngModel)]="work.WorkPlace" [name]="'Work[' + i + '].WorkPlace'"></td>
                         <td><input type="date" class="form-control" id="start-date" [(ngModel)]="work.StartDT" [name]="'Work[' + i + '].StartDT'"></td>
                         <td><input type="date" class="form-control" id="end-date" [(ngModel)]="work.EndDT" [name]="'Work[' + i + '].EndDT'"></td>
@@ -130,7 +131,7 @@
                             <option *ngFor="let Sport of leaderDetailDTO.sports" [value]="Sport.sportNo">{{ Sport.sportName }}</option>
                           </select>
                           <button *ngIf="i === 0" (click)="addHistoryRow()">추가</button>
-                          <button class="button History-delete" *ngIf="i >= 1 && work.buttonLabel === '삭제'" (click)="deleteHistoryRow(i)">삭제</button>
+                          <button *ngIf="i >= 1" (click)="deleteHistoryRow(i)">삭제</button>
                         </td>
                     </tr>
                 </table>
@@ -144,7 +145,7 @@
                         <th>취득일자</th>
                         <th>발급기관</th>
                     </tr>
-                    <tr *ngFor="let certificate of certificateList; let i = index" class="Certificate-Table-Tr">
+                    <tr *ngFor="let certificate of leaderInfoDTO.Certificate; let i = index" class="Certificate-Table-Tr">
                         <td><input type="text" class="qualification" [(ngModel)]="certificate.CertificateName" [name]="'Certificate[' + i + '].CertificateName'" placeholder="자격을 입력해주세요."></td>
                         <td><input type="text" class="qualification-number" [(ngModel)]="certificate.CertificateNumber" [name]="'Certificate[' + i + '].CertificateNumber'" placeholder="영문, 숫자만 입력해주세요."></td>
                         <td>
@@ -153,7 +154,7 @@
                         <td>
                             <input type="text" class="origanization-name" placeholder="발급기관을 입력해주세요." [(ngModel)]="certificate.Origanization" [name]="'Certificate[' + i + '].Origanization'">
                             <button class="button Certificate-add" *ngIf="i === 0" (click)="addCertificateRow()">추가</button>
-                            <button class="button Certificate-delete" *ngIf="i >= 1 && certificate.buttonLabel === '삭제'" (click)="deleteCertificateRow(i)">삭제</button>
+                            <button *ngIf="i >= 1" (click)="deleteCertificateRow(i)">삭제</button>
                         </td>
                     </tr>
                 </table>

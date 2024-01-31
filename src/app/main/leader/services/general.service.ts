@@ -29,11 +29,6 @@ export class GeneralService {
     return this.http.get<LeaderDTO[]>(`${this.ROOT_URL}/Home/StartInfo`);
   }
 
-  // start 페이지에서 삭제할 떄 쓰이는
-  // deleteLeaders(): Observable<LeaderDTO[]> {
-  //   return this.http.delete<LeaderDTO[]>(`${this.ROOT_URL}/Home/Remove`);
-  // }
-  
   // removeLeaders 메서드 수정
   removeLeaders(leaderNos: string[]): Observable<any> {
     const url = `${this.ROOT_URL}/Home/Remove`;
@@ -54,7 +49,15 @@ export class GeneralService {
 
   // leader 등록하기
   postLeaders(leaderData: LeaderInfoDTO): Observable<LeaderInfoDTO> {
-    return this.http.post<LeaderInfoDTO>(`${this.ROOT_URL}/Home/Register`, leaderData);
+    console.log('전송할 데이터:', leaderData);
+
+    return this.http.post<LeaderInfoDTO>(`${this.ROOT_URL}/Home/RegisterInfo`, leaderData);
+  }
+
+  editLeaders(leaderData: LeaderInfoDetailDTO): Observable<LeaderInfoDetailDTO> {
+    console.log('전송할 데이터:', leaderData);
+
+    return this.http.patch<LeaderInfoDetailDTO>(`${this.ROOT_URL}/Home/EditInfo`, leaderData);
   }
   
   // 지도자 식별 코드 보내기

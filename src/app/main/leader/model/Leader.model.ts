@@ -4,3 +4,12 @@ export class LeaderDTO {
     sportName?: string;
     schoolName?: string;
 }
+
+export class LeaderDetailDTO {
+    LeaderNo?: string;
+    LeaderName?: string;
+    SportName?: string;
+    SportNo?: string;
+    SchoolName?: string;
+    SchoolNo?: string;
+}

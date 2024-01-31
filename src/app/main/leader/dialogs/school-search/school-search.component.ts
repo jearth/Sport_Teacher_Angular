@@ -46,7 +46,8 @@ export class SchoolSearchComponent {
   closeSchoolSearchModal(): void {
     this.generalService.setSelectedSchoolNo(this.selectedSchool);
     this.dialogRef.close({
-      schoolName: this.selectedSchool ? this.selectedSchool.schoolName : null,
+      SchoolName: this.selectedSchool ? this.selectedSchool.schoolName : null,
+      SchoolNo: this.selectedSchool ? this.selectedSchool.schoolNo : null,
     });
   }
 
@@ -56,8 +57,8 @@ export class SchoolSearchComponent {
 
   registerSchoolSearchModal(): void {
     if (this.selectedSchool) {
-      const setSelectedSchoolNo = this.selectedSchool.schoolName;
-      this.generalService.setSelectedSchoolNo(setSelectedSchoolNo);
+      const selectedSchoolName = this.selectedSchool.schoolName;
+      this.generalService.setSelectedSchoolNo(selectedSchoolName);
       this.closeSchoolSearchModal();
     } else {
       this.openRegisterErrorSchoolSearchModal();

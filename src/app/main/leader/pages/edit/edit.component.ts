@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SchoolSearchComponent } from '../../dialogs/school-search/school-search.component';
 import { AlertComponent } from '../../../../utils/alert/alert.component';
 import { AlertErrorComponent } from '../../../../utils/alert-error/alert-error.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from '../../services/general.service';
 import { DatePipe } from '@angular/common';
 import { LeaderInfoEditDTO } from '../../model/LeaderInfoEdit.model';
@@ -16,19 +16,39 @@ import { Conditional } from '@angular/compiler';
   styleUrl: './edit.component.css'
 })
 export class EditComponent {
-  leaderEditInfo: LeaderInfoEditDTO = new LeaderInfoEditDTO();
+  leaderInfo: LeaderInfoEditDTO = new LeaderInfoEditDTO();
 
   constructor(private route: ActivatedRoute,
     private generalService: GeneralService,
-    // private datePipe: DatePipe,
-    public dialog: MatDialog) {}
+    public dialog: MatDialog,
+    private router: Router) {}
+
+  leaderEditInfo: LeaderInfoEditDTO = {
+    imageBase: '',
+    leaderNo: '',
+    leaderName: '',
+    schoolNo: '',
+    birthday: new Date(),
+    gender: '',
+    sportNo: '',
+    telNo: '',
+    empDT: new Date(),
+
+    work: [
+      { workPlace: '', startDT: new Date(), endDT: new Date(), sportNo: '' }
+    ],
+    certificate: [
+      { certificateName: '', certificateNumber: '', certificateDT: new Date(), origanization: '' }
+    ]
+  };
+  
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((param: any) => {
       this.generalService.getEdits(param.leaderNo).subscribe(
         (data: LeaderInfoEditDTO) => {
-          this.leaderEditInfo = data;
-          console.log('전체 데이터:', this.leaderEditInfo);
+          this.leaderInfo = data;
+          console.log('전체 데이터:', this.leaderInfo);
         },
         (error) => {
           console.error('리더 정보를 가져오는 동안 오류가 발생했습니다.', error);
@@ -36,8 +56,47 @@ export class EditComponent {
       );
     });
   }
+  
+  updateLeaderInfoFromEdit() {
+    this.leaderInfo = { ...this.leaderEditInfo };
+  }
 
-  // 파일 내용을 읽어와서 base64 형태로 변환하여 leaderEditInfo.imageBase에 저장
+  // openEditSuccessModal(): void {
+  //   this.leaderData = this.leaderInfoDTO;
+
+  //   // 유효성 검사
+  //   let validateResult: boolean = true;
+    
+  //   // 유효성 검사를 만족하지 않으면, 필수입력값 에러 모달창 열기
+  //   if (!validateResult) {
+  //     this.openRegisterErrorModal();
+  //   } else {
+  //     const dialogRef = this.dialog.open(AlertComponent, {
+  //       data: {
+  //         title: '지도자 등록',
+  //         content: '입력한 내용으로 지도자를 등록하시겠습니까?'
+  //       }
+  //     });
+
+  //     dialogRef.afterClosed().subscribe((result: boolean) => {
+  //       if(result) this.register();
+  //     });
+  //   }
+  // }
+
+  // edit() {
+  //   this.generalService.postLeaders(this.leaderInfo).subscribe(
+  //     (result) => {
+  //       console.log('등록 성공:', result);
+  //       this.router.navigate(['/']);
+  //     },
+  //     (error) => {
+  //       console.error('등록 실패:', error);
+  //     }
+  //   );
+  // }
+
+  // 파일 내용을 읽어와서 base64 형태로 변환하여 leaderInfo.imageBase에 저장
   onFileChange(event: any): void {
     const inputElement = event.target as HTMLInputElement;
 
@@ -46,7 +105,7 @@ export class EditComponent {
       const reader = new FileReader();
 
       reader.onload = () => {
-        this.leaderEditInfo.imageBase = reader.result as string;
+        this.leaderInfo.imageBase = reader.result as string;
       };
 
       reader.readAsDataURL(file);
@@ -70,12 +129,12 @@ export class EditComponent {
 
   addHistoryRow() {
     const employmentHistory = {workPlace: '', startDT: null, endDT: null, sportName: ''};
-    (this.leaderEditInfo!.work as any[]).push(employmentHistory);
+    (this.leaderInfo!.work as any[]).push(employmentHistory);
   }
 
   deleteHistoryRow(index: number) {
-    if (this.leaderEditInfo) {
-        this.leaderEditInfo.work!.splice(index, 1);
+    if (this.leaderInfo) {
+        this.leaderInfo.work!.splice(index, 1);
     }
   }
 
@@ -86,12 +145,12 @@ export class EditComponent {
 
   addCertificateRow() {
     const certificateList = {workPlace: '', startDT: null, endDT: null, sportName: ''};
-    (this.leaderEditInfo!.certificate as any[]).push(certificateList);
+    (this.leaderInfo!.certificate as any[]).push(certificateList);
   }
 
   deleteCertificateRow(index: number) {
-    if (this.leaderEditInfo) {
-        this.leaderEditInfo.certificate!.splice(index, 1);
+    if (this.leaderInfo) {
+        this.leaderInfo.certificate!.splice(index, 1);
     }
   }
 

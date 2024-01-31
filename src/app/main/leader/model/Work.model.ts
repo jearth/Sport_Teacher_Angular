@@ -3,6 +3,15 @@ export class Work {
     startDT?: Date;
     endDT?: Date;
     sportName?: string;
+    sportNo?: string;
+}
+
+export class WorkDetailDTO {
+    WorkPlace?: string;
+    StartDT?: Date;
+    EndDT?: Date;
+    SportNo?: string;
+    SportName?: string;
 }
 
 export class WorkDetail {
