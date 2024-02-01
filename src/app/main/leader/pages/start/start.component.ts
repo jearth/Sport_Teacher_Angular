@@ -90,7 +90,7 @@ export class StartComponent {
 
     // 검색된 데이터를 tableDate에 할당
     this.tableDate = filteredData;
-    
+
     // 검색된 데이터를 dataSource에 할당하여 테이블 갱신
     this.dataSource.data = this.tableDate; 
   }
@@ -179,6 +179,7 @@ export class StartComponent {
     if (this.tableDate.length > 0) {
       return this.tableDate.slice(startIndex, endIndex);
     } else {
+      console.log('paginationTableData Length: 0');
       return [];
     }
   }

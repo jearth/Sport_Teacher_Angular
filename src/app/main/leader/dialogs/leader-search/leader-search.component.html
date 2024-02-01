@@ -24,12 +24,18 @@
                             <th>식별코드</th>
                         </tr>
                     </thead>
-                    <tbody class="leaderTable_body"></tbody>
-                    <tr *ngFor="let leader of leaderDetailDTO.leaders; let i = index" (click)="selectRow(leader)" [ngClass]="{ 'selected-row': selectedLeader === leader }">
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ leader.leaderName }}</td>
-                        <td>{{ leader.leaderNo }}</td>
-                      </tr>
+                    <tbody class="leaderTable_body">
+                        <ng-container *ngIf="leaderDetailDTO.leaders && leaderDetailDTO.leaders.length === 0">
+                            <tr>
+                                <td colspan="3">검색된 결과가 없습니다.</td>
+                            </tr>
+                        </ng-container>
+                        <tr *ngFor="let leader of leaderDetailDTO.leaders; let i = index" (click)="selectRow(leader)" [ngClass]="{ 'selected-row': selectedLeader === leader }">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ leader.leaderName }}</td>
+                            <td>{{ leader.leaderNo }}</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>

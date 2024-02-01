@@ -52,7 +52,7 @@
                                 <h6 id="dob-heading" class="custom-heading">
                                     생년월일<span class="highlight-text">*</span>
                                     <div class="mb-3">
-                                        <input type="date" class="form-control" [(ngModel)]="leaderInfoDTO.Birthday" [ngModelOptions]="{standalone: true}" data-placeholder="생년월일을 입력해주세요." name="Birthday">
+                                        <input type="date" class="form-control" [(ngModel)]="leaderInfoDTO.Birthday" [ngModelOptions]="{standalone: true}" data-placeholder="생년월일을 입력해주세요." name="Birthday" required>
                                     </div>
                                 </h6>
                             </div>
@@ -101,7 +101,7 @@
                                 <h6 id="hire-date-heading" class="custom-heading">
                                     최초채용<span class="highlight-text">*</span>
                                     <div class="mb-3">
-                                        <input type="date" class="form-control" id="hire" [(ngModel)]="leaderInfoDTO.EmpDT" [ngModelOptions]="{standalone: true}" placeholder="최초채용일을 선택해주세요.">
+                                        <input type="date" class="form-control" id="hire" [(ngModel)]="leaderInfoDTO.EmpDT" [ngModelOptions]="{standalone: true}" data-placeholder="최초채용일을 선택해주세요." required> 
                                         <p>최초 채용일은 <span class="highlight-text">전라북도 교육청 소속 최초 채용일을</span> 선택해주세요.</p>
                                     </div>
                                 </h6>
@@ -122,8 +122,8 @@
                     </tr>
                     <tr *ngFor="let work of leaderInfoDTO.Work; let i = index" class="Employment-History-Tr">
                         <td><input type="text" class="school-name" placeholder="학교명을 입력해주세요." [(ngModel)]="work.WorkPlace" [name]="'Work[' + i + '].WorkPlace'"></td>
-                        <td><input type="date" class="form-control" id="start-date" [(ngModel)]="work.StartDT" [name]="'Work[' + i + '].StartDT'"></td>
-                        <td><input type="date" class="form-control" id="end-date" [(ngModel)]="work.EndDT" [name]="'Work[' + i + '].EndDT'"></td>
+                        <td><input type="date" class="form-control" id="start-date" [(ngModel)]="work.StartDT" [name]="'Work[' + i + '].StartDT'" data-placeholder="근무 시작일을 선택해주세요." required></td>
+                        <td><input type="date" class="form-control" id="end-date" [(ngModel)]="work.EndDT" [name]="'Work[' + i + '].EndDT'" data-placeholder="근무 종료일을 선택해주세요." required></td>
                         <td id="sport-table">
                           <select class="form-select" aria-label="종목을 선택해주세요." id="sport-select-container" [(ngModel)]="work.SportNo" [name]="'Work[' + i + '].SportNo'">
                             <option value="">종목을 선택해주세요.</option>
@@ -148,7 +148,7 @@
                         <td><input type="text" class="qualification" [(ngModel)]="certificate.CertificateName" [name]="'Certificate[' + i + '].CertificateName'" placeholder="자격을 입력해주세요."></td>
                         <td><input type="text" class="qualification-number" [(ngModel)]="certificate.CertificateNumber" [name]="'Certificate[' + i + '].CertificateNumber'" placeholder="영문, 숫자만 입력해주세요."></td>
                         <td>
-                            <input type="date" class="form-control" id="get-date" [(ngModel)]="certificate.CertificateDT" [name]="'Certificate[' + i + '].CertificateDT'" data-placeholder="취득일자를 선택해주세요.">
+                            <input type="date" class="form-control" id="get-date" [(ngModel)]="certificate.CertificateDT" [name]="'Certificate[' + i + '].CertificateDT'" data-placeholder="취득일자를 선택해주세요." required>
                         </td>
                         <td>
                             <input type="text" class="origanization-name" placeholder="발급기관을 입력해주세요." [(ngModel)]="certificate.Origanization" [name]="'Certificate[' + i + '].Origanization'">

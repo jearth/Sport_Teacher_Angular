@@ -12,6 +12,9 @@ import { AlertErrorComponent } from '../../../../utils/alert-error/alert-error.c
 export class SchoolSearchComponent {
   selectedSchool: any;
   leaderDetailDTO: LeaderDetailDTO = {};
+  
+  searchSchool: string = '';
+  originalSchools: any[] = [];
 
   constructor(public dialogRef: MatDialogRef<SchoolSearchComponent>, private generalService: GeneralService, public dialog: MatDialog) {}
 
@@ -30,17 +33,20 @@ export class SchoolSearchComponent {
     );    
   }
 
-  searchSchool: string = '';
-
   searchSchoolName(): void {
-    if (this.leaderDetailDTO && this.leaderDetailDTO.schools && this.searchSchool.trim() !== '') {
-      this.leaderDetailDTO.schools = this.leaderDetailDTO.schools.filter(
-        (leader) => leader && leader.schoolName && leader.schoolName.includes(this.searchSchool.trim())
-      );
-    } 
-    else {
-      this.loadData(); 
+    if (!this.leaderDetailDTO || !this.leaderDetailDTO.schools) {
+      return;
     }
+
+    if (!this.originalSchools.length) {
+      this.originalSchools = [...this.leaderDetailDTO.schools];
+    }
+
+    this.leaderDetailDTO.schools = this.searchSchool.trim() !== ''
+      ? this.originalSchools.filter(
+          (school) => school && school.schoolName && school.schoolName.includes(this.searchSchool.trim())
+        )
+      : [...this.originalSchools];
   }
 
   closeSchoolSearchModal(): void {

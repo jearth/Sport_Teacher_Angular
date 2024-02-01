@@ -38,28 +38,6 @@
                     <div class="button delete" (click)="openStartDeleteModal()">삭제하기</div>
                 </div>
             </div>
-            <!-- <div class="leaderTable">
-                <table>
-                    <thead>
-                        <tr>
-                            <th><input type="checkbox" id="selectAll" />번호</th>
-                            <th>식별코드</th>
-                            <th>이름</th>
-                            <th>종목</th>
-                            <th>소속학교</th>
-                            <th>이력 정보 상세</th>
-                        </tr>
-                    </thead>
-                    <tbody class="leaderTable_body"></tbody>
-                    <tr *ngFor="let leaders of leaderDTO; let i = index">
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ leaders.leaderNo }}</td>
-                        <td>{{ leaders.leaderName }}</td>
-                        <td>{{ leaders.sportName }}</td>
-                        <td>{{ leaders.schoolName }}</td>
-                    </tr>
-                </table>
-            </div> -->
             <section class="mat-elevation-z0">    
                 <table mat-table [dataSource]="paginationTableData">
                     <ng-container matColumnDef="position">
@@ -96,11 +74,13 @@
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    <ng-container *ngIf="paginationTableData.length === 0;">
-                        <td colspan="6" class="no-results-message">
+                    <ng-container *ngIf="paginationTableData.length === 0">
+                        <tr mat-row>
+                          <td colspan="6" class="no-results-message">
                             검색된 결과가 없습니다.
-                        </td>
-                    </ng-container>
+                          </td>
+                        </tr>
+                      </ng-container>
                 </table>
                 <div class="pagination">
                     <button (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1" style="border: none; background-color: #FFFFFF;"><</button>

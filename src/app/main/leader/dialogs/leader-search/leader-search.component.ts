@@ -11,11 +11,11 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrl: './leader-search.component.css'
 })
 export class LeaderSearchComponent {
-  constructor(public dialogRef: MatDialogRef<LeaderSearchComponent>,
-              private generalService: GeneralService,
-              public dialog: MatDialog) {}
+  constructor(public dialogRef: MatDialogRef<LeaderSearchComponent>, private generalService: GeneralService, public dialog: MatDialog) {}
 
   leaderDetailDTO: LeaderDetailDTO = {};
+  searchName: string = '';
+  originalLeaders: any[] = [];
 
   ngOnInit(): void {
     this.loadData();
@@ -32,18 +32,20 @@ export class LeaderSearchComponent {
     );    
   }
   
-  searchName: string = '';
-
   searchLeadersName(): void {
-    let leaderfilteredData: LeaderDetailDTO[];
-    
-    if (this.leaderDetailDTO && this.leaderDetailDTO.leaders && this.searchName.trim() !== '') {
-      this.leaderDetailDTO.leaders = this.leaderDetailDTO.leaders.filter(
-        (leader) => leader && leader.leaderName && leader.leaderName.includes(this.searchName.trim())
-      );
-    } else {
-      this.loadData(); 
+    if (!this.leaderDetailDTO || !this.leaderDetailDTO.leaders) {
+      return;
     }
+
+    if (!this.originalLeaders.length) {
+      this.originalLeaders = [...this.leaderDetailDTO.leaders];
+    }
+
+    this.leaderDetailDTO.leaders = this.searchName.trim() !== ''
+      ? this.originalLeaders.filter(
+          (leader) => leader && leader.leaderName && leader.leaderName.includes(this.searchName.trim())
+        )
+      : [...this.originalLeaders];
   }
 
   selectedLeader: any;
