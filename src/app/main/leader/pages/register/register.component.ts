@@ -151,11 +151,6 @@ export class RegisterComponent {
     reader.readAsDataURL(file);
   }
 
-  // 전화번호 업데이트
-  // updateTelNo() {
-  //   this.leaderInfoDTO.TelNo = `${this.leaderInfoDTO.tel1}${this.leaderInfoDTO.tel2}${this.leaderInfoDTO.tel3}`;
-  // }
-
   calculateTelNo() {
     const tel1 = this.trimAndValidate(this.tel1);
     const tel2 = this.trimAndValidate(this.tel2);
@@ -176,7 +171,6 @@ export class RegisterComponent {
       return '';
     }
   }
-
 
   // 근무 이력 테이블 추가
   addHistoryRow() {
@@ -213,7 +207,6 @@ export class RegisterComponent {
     return true;
   }
   
-
   // 지도자 등록 취소 모달창 열기
   openRegisterCancelModal(): void {
     const dialogRef = this.dialog.open(AlertComponent, {

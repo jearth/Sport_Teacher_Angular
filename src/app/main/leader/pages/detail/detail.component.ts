@@ -23,7 +23,7 @@ export class DetailComponent {
       this.generalService.getDetails(param.leaderNo).subscribe(
         (data: LeaderInfoDetailDTO) => {
           this.leaderInfo = data;
-          console.log('전체 데이터:', this.leaderInfo);
+          console.log('전체 디테일 데이터:', this.leaderInfo);
         },
         (error) => {
           console.error('리더 정보를 가져오는 동안 오류가 발생했습니다.', error);

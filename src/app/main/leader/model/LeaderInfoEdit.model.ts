@@ -13,10 +13,10 @@ export class LeaderInfoEditDTO {
     sportNo?: string;
     schoolName?: string;
     schoolNo?: string;
-    birthday?: Date;
+    birthday?: Date | string;
     gender?: string;
     telNo?: string;
-    empDT?: Date;
+    empDT?: Date | string;
     tel1?: string;
     tel2?: string;
     tel3?: string;

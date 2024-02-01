@@ -1,7 +1,7 @@
 export class Work {
     workPlace?: string;
-    startDT?: Date;
-    endDT?: Date;
+    startDT?: Date | string;
+    endDT?: Date | string;
     sportName?: string;
     sportNo?: string;
 }

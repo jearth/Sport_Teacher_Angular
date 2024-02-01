@@ -1,7 +1,7 @@
 export class Certificate {
     certificateName?: string;
     certificateNumber?: string;
-    certificateDT?: Date;
+    certificateDT?: Date | string;
     origanization?: string;
 }
 

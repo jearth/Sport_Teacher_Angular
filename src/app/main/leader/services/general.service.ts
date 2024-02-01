@@ -54,10 +54,11 @@ export class GeneralService {
     return this.http.post<LeaderInfoDTO>(`${this.ROOT_URL}/Home/RegisterInfo`, leaderData);
   }
 
-  editLeaders(leaderData: LeaderInfoDetailDTO): Observable<LeaderInfoDetailDTO> {
-    console.log('전송할 데이터:', leaderData);
+  editLeaders(leaderNo: string | undefined, leaderEditInfo: LeaderInfoDetailDTO): Observable<LeaderInfoDetailDTO> {
+    console.log('전송할 데이터:', leaderEditInfo);
+    const formattedLeaderNo = leaderNo!;
 
-    return this.http.patch<LeaderInfoDetailDTO>(`${this.ROOT_URL}/Home/EditInfo`, leaderData);
+    return this.http.post<LeaderInfoDetailDTO>(`${this.ROOT_URL}/Home/EditInfo?leaderNo=${formattedLeaderNo}`, leaderEditInfo);
   }
   
   // 지도자 식별 코드 보내기

@@ -11,7 +11,9 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrl: './leader-search.component.css'
 })
 export class LeaderSearchComponent {
-  constructor(public dialogRef: MatDialogRef<LeaderSearchComponent>, private generalService: GeneralService, public dialog: MatDialog) {}
+  constructor(public dialogRef: MatDialogRef<LeaderSearchComponent>,
+              private generalService: GeneralService,
+              public dialog: MatDialog) {}
 
   leaderDetailDTO: LeaderDetailDTO = {};
 
@@ -33,6 +35,8 @@ export class LeaderSearchComponent {
   searchName: string = '';
 
   searchLeadersName(): void {
+    let leaderfilteredData: LeaderDetailDTO[];
+    
     if (this.leaderDetailDTO && this.leaderDetailDTO.leaders && this.searchName.trim() !== '') {
       this.leaderDetailDTO.leaders = this.leaderDetailDTO.leaders.filter(
         (leader) => leader && leader.leaderName && leader.leaderName.includes(this.searchName.trim())

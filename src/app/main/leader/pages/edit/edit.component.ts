@@ -9,6 +9,7 @@ import { GeneralService } from '../../services/general.service';
 import { DatePipe } from '@angular/common';
 import { LeaderInfoEditDTO } from '../../model/LeaderInfoEdit.model';
 import { Conditional } from '@angular/compiler';
+import moment from 'moment';
 
 @Component({
   selector: 'app-edit',
@@ -17,38 +18,35 @@ import { Conditional } from '@angular/compiler';
 })
 export class EditComponent {
   leaderInfo: LeaderInfoEditDTO = new LeaderInfoEditDTO();
+  leaderEditInfo: LeaderInfoEditDTO = new LeaderInfoEditDTO();
 
   constructor(private route: ActivatedRoute,
     private generalService: GeneralService,
     public dialog: MatDialog,
-    private router: Router) {}
-
-  leaderEditInfo: LeaderInfoEditDTO = {
-    imageBase: '',
-    leaderNo: '',
-    leaderName: '',
-    schoolNo: '',
-    birthday: new Date(),
-    gender: '',
-    sportNo: '',
-    telNo: '',
-    empDT: new Date(),
-
-    work: [
-      { workPlace: '', startDT: new Date(), endDT: new Date(), sportNo: '' }
-    ],
-    certificate: [
-      { certificateName: '', certificateNumber: '', certificateDT: new Date(), origanization: '' }
-    ]
-  };
-  
+    private router: Router) {}  
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((param: any) => {
       this.generalService.getEdits(param.leaderNo).subscribe(
         (data: LeaderInfoEditDTO) => {
+          data.birthday = moment(data.birthday).format('yyyy-MM-DD');
+          data.empDT = moment(data.empDT).format('yyyy-MM-DD');
+
+          if (data.work) {
+            data.work.forEach(workformat => {
+              workformat.startDT = moment(workformat.startDT).format('yyyy-MM-DD');
+              workformat.endDT = moment(workformat.endDT).format('yyyy-MM-DD');
+            });
+          }
+
+          if (data.certificate) {
+            data.certificate.forEach(certificateformat => {
+              certificateformat.certificateDT = moment(certificateformat.certificateDT).format('yyyy-MM-DD');
+            });
+          }
+
           this.leaderInfo = data;
-          console.log('전체 데이터:', this.leaderInfo);
+          console.log('전체 수정 데이터:', this.leaderInfo);
         },
         (error) => {
           console.error('리더 정보를 가져오는 동안 오류가 발생했습니다.', error);
@@ -57,44 +55,40 @@ export class EditComponent {
     });
   }
   
-  updateLeaderInfoFromEdit() {
-    this.leaderInfo = { ...this.leaderEditInfo };
+  openEditSuccessModal(): void {
+    // 유효성 검사
+    let validateResult: boolean = true;
+    
+    // 유효성 검사를 만족하지 않으면, 필수입력값 에러 모달창 열기
+    if (!validateResult) {
+      this.openEditErrorModal();
+    } else {
+      const dialogRef = this.dialog.open(AlertComponent, {
+        data: {
+          title: '지도자 등록',
+          content: '입력한 내용으로 지도자를 등록하시겠습니까?'
+        }
+      });
+
+      dialogRef.afterClosed().subscribe((result: boolean) => {
+        if(result) this.edit();
+      });
+    }
   }
 
-  // openEditSuccessModal(): void {
-  //   this.leaderData = this.leaderInfoDTO;
-
-  //   // 유효성 검사
-  //   let validateResult: boolean = true;
-    
-  //   // 유효성 검사를 만족하지 않으면, 필수입력값 에러 모달창 열기
-  //   if (!validateResult) {
-  //     this.openRegisterErrorModal();
-  //   } else {
-  //     const dialogRef = this.dialog.open(AlertComponent, {
-  //       data: {
-  //         title: '지도자 등록',
-  //         content: '입력한 내용으로 지도자를 등록하시겠습니까?'
-  //       }
-  //     });
-
-  //     dialogRef.afterClosed().subscribe((result: boolean) => {
-  //       if(result) this.register();
-  //     });
-  //   }
-  // }
-
-  // edit() {
-  //   this.generalService.postLeaders(this.leaderInfo).subscribe(
-  //     (result) => {
-  //       console.log('등록 성공:', result);
-  //       this.router.navigate(['/']);
-  //     },
-  //     (error) => {
-  //       console.error('등록 실패:', error);
-  //     }
-  //   );
-  // }
+  edit() {
+    this.leaderEditInfo = Object.assign({}, this.leaderInfo, { leaderNo: this.leaderInfo.leaderNo });
+    this.leaderEditInfo.telNo = `${this.leaderEditInfo.tel1}-${this.leaderEditInfo.tel2}-${this.leaderEditInfo.tel3}`;
+    this.generalService.editLeaders(this.leaderInfo.leaderNo, this.leaderEditInfo).subscribe(
+      (result) => {
+        console.log('수정 성공:', result);
+        this.router.navigate(['/']);
+      },
+      (error) => {
+        console.error('등록 실패:', error);
+      }
+    );
+  }
 
   // 파일 내용을 읽어와서 base64 형태로 변환하여 leaderInfo.imageBase에 저장
   onFileChange(event: any): void {
@@ -168,29 +162,5 @@ export class EditComponent {
       data: { title: '필수입력값 확인',
               content: '필수입력값이 채워지지 않았습니다. <br> 확인후 채워주시기 바랍니다.' }
     });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (!result) {
-    //     this.
-    //   }
-    // });
   }
-
-  // 지도자 등록 모달창 열기
-  openEditSuccessModal(): void {
-    // 유효성 검사
-    let validateResult: boolean = false;
-    
-    // 유효성 검사를 만족하지 않으면, 필수입력값 에러 모달창 열기
-    if (!validateResult) {
-      this.openEditErrorModal();
-    } else {
-      const dialogRef = this.dialog.open(AlertComponent, {
-        data: {
-          title: '지도자 수정',
-          content: '입력한 내용으로 지도자를 수정하시겠습니까?'
-        }
-      });
-    }
-  }
-
 }
