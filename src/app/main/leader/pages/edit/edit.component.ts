@@ -20,6 +20,10 @@ export class EditComponent {
   leaderInfo: LeaderInfoEditDTO = new LeaderInfoEditDTO();
   leaderEditInfo: LeaderInfoEditDTO = new LeaderInfoEditDTO();
 
+  tel1: string = '';
+  tel2: string = '';
+  tel3: string = '';
+
   constructor(private route: ActivatedRoute,
     private generalService: GeneralService,
     public dialog: MatDialog,
@@ -57,7 +61,8 @@ export class EditComponent {
   
   openEditSuccessModal(): void {
     // 유효성 검사
-    let validateResult: boolean = true;
+    let validateResult: boolean = this.allvalidation(0);
+
     
     // 유효성 검사를 만족하지 않으면, 필수입력값 에러 모달창 열기
     if (!validateResult) {
@@ -111,9 +116,21 @@ export class EditComponent {
     const dialogRef = this.dialog.open(LeaderSearchComponent);
   }
 
+  schoolNameValue: string | undefined;
+  schoolNoValue: string | undefined;
+  
   // 학교명 검색 모달창 열기
   openSchoolSearchModal(): void {
     const dialogRef = this.dialog.open(SchoolSearchComponent);
+    dialogRef.afterClosed().subscribe((value: any) => {
+      console.log("Returned Value from School Search Modal:", value);
+
+      this.schoolNameValue = value?.SchoolName;
+      this.schoolNoValue = value?.SchoolNo;
+
+      this.leaderInfo.schoolNo = this.schoolNoValue;
+      this.leaderInfo.schoolName = this.schoolNameValue
+    });
   }
 
   // 근무 이력 테이블 추가
@@ -162,5 +179,119 @@ export class EditComponent {
       data: { title: '필수입력값 확인',
               content: '필수입력값이 채워지지 않았습니다. <br> 확인후 채워주시기 바랍니다.' }
     });
+  }
+
+  // 생년월일 유효성 검사 함수
+  validateBirthday(): boolean {
+    if (!this.leaderInfo.birthday) {
+        return false;  // 값이 없으면 false 반환
+    }
+
+    const enteredDate = new Date(this.leaderInfo.birthday);
+    return enteredDate > new Date();
+  }
+
+  isTelNumberValid: boolean = true;
+
+  trimAndValidate(value: string): string {
+    const trimmedValue = value.trim();
+
+    if (/^\d+$/.test(trimmedValue)) {
+      return trimmedValue;
+    } else {
+      // 숫자가 아닌 경우 빈 문자열 반환
+      return '';
+    }
+  }
+
+  // 근무지 전화번호 유효성 검사 함수
+  calculateTelNo(): boolean {
+    const tel1 = this.trimAndValidate(this.tel1);
+    const tel2 = this.trimAndValidate(this.tel2);
+    const tel3 = this.trimAndValidate(this.tel3);
+  
+    if (tel1 && tel2 && tel3) {
+      this.leaderInfo.telNo = `${tel1}-${tel2}-${tel3}`;
+      this.isTelNumberValid = true;
+      return true;
+    } else {
+      this.isTelNumberValid = false;
+      return false;
+    }
+  }
+
+  // 근무 시작일 유효성 검사 함수
+  checkStartDate(index: number): boolean {
+    const work = this.leaderInfo.work && this.leaderInfo.work[index];
+    const startDate = work && work.startDT;
+    const today = new Date();
+  
+    return !!startDate && new Date(startDate) < today;
+  }
+  
+  // 근무 종료일 유효성 검사 함수 
+  checkEndDate(index: number): boolean {
+    const work = this.leaderInfo.work && this.leaderInfo.work[index];
+    const startDate = work && work.startDT;
+    const endDate = work && work.endDT;
+  
+    return !!startDate && !!endDate && new Date(startDate) > new Date(endDate);
+  }
+
+  // 자격번호 유효성 검사
+  checkCertificateNumberDate(index: number): boolean {
+    const certificate = this.leaderInfo.certificate && this.leaderInfo.certificate[index];
+    const certificateNumber = certificate && certificate.certificateNumber;
+    const regex = /^[ㄱ-힣]+$/;
+
+    return !!certificateNumber && regex.test(certificateNumber);
+  }
+
+  // 취득일자 유효성 검사 함수
+  checkCertificateDTDate(index: number): boolean {
+    const certificate = this.leaderInfo.certificate && this.leaderInfo.certificate[index];
+    const certificateDate = certificate && certificate.certificateDT;
+    const today = new Date();
+  
+    return !!certificateDate && new Date(certificateDate) > today;
+  }
+
+   // 전체 유효성 검사 true, false
+   allvalidation(index: number): boolean {
+    let isBirthdayValid: boolean = this.validateBirthday();
+    let iscalculateTelNo: boolean = this.calculateTelNo();
+    let ischeckStartDate: boolean = this.checkStartDate(index);
+    let ischeckEndDate: boolean = this.checkEndDate(index);
+    let ischeckGetDate: boolean = this.checkCertificateDTDate(index);
+    let ischeckNumberDate: boolean = this.checkCertificateNumberDate(index);
+
+    let isImagebaseValid: boolean = this.leaderInfo?.imageBase?.trim() !== '';
+    let isSportNoValid: boolean = this.leaderInfo?.sportNo?.trim() !== '';
+    let isEmpDTValid: boolean = this.leaderInfo?.empDT?.toString().trim() !== '';
+    let isBirthdayinfoValid: boolean = this.leaderInfo?.birthday?.toString().trim() !== '';
+    let isWorkValid: boolean = true;
+
+    for (let workIndex = 0; this.leaderInfo?.work && workIndex < this.leaderInfo.work.length; workIndex++) {
+      let isWorkPlaceValid: boolean = this.leaderInfo.work?.[workIndex]?.workPlace?.trim() !== '';
+      let isStartDTValid: boolean = this.leaderInfo.work?.[workIndex]?.startDT?.toString().trim() !== '';
+      let isWorkSportNoValid: boolean = this.leaderInfo.work?.[workIndex]?.sportNo?.trim() !== '';
+
+      isWorkValid = isWorkPlaceValid && isStartDTValid && isWorkSportNoValid;
+    }
+    let isCertificateValid: boolean = true;
+
+    for (let certificateIndex = 0; this.leaderInfo?.certificate && certificateIndex < this.leaderInfo.certificate.length; certificateIndex++) {
+      let isCertificateNameValid: boolean = this.leaderInfo.certificate?.[certificateIndex]?.certificateName?.trim() !== '';
+      let isCertificateNumberValid: boolean = this.leaderInfo.certificate?.[certificateIndex]?.certificateNumber?.trim() !== '';
+      let isCertificateDTValid: boolean = this.leaderInfo.certificate?.[certificateIndex]?.certificateDT?.toString().trim() !== '';
+      let isOriganizationValid: boolean = this.leaderInfo.certificate?.[certificateIndex]?.origanization?.trim() !== '';
+
+      isCertificateValid = isCertificateNameValid && isCertificateNumberValid && isCertificateDTValid && isOriganizationValid;
+    }
+    
+    return !isBirthdayValid && iscalculateTelNo && ischeckStartDate &&
+            !ischeckEndDate && !ischeckGetDate && !ischeckNumberDate &&
+            isImagebaseValid && isSportNoValid && isEmpDTValid &&
+            isBirthdayinfoValid && isWorkValid && isCertificateValid;
   }
 }

@@ -18,6 +18,19 @@ import { Router } from '@angular/router';
 })
 
 export class RegisterComponent {
+  leaderDetailDTO: LeaderDetailDTO = {};
+  leaderNoValue: string | undefined;
+  leaderNameValue: string | undefined;
+  schoolNameValue: string | undefined;
+  schoolNoValue: string | undefined;
+
+
+  selectedImage: File | null = null;
+  selectedImageUrl: string | null = null;
+
+  tel1: string = '';
+  tel2: string = '';
+  tel3: string = '';
 
   Gender: string = 'M';
 
@@ -26,7 +39,7 @@ export class RegisterComponent {
     LeaderNo: '',
     LeaderName: '',
     SchoolNo: '',
-    Birthday: new Date(),
+    Birthday: new Date(), 
     Gender: this.Gender,
     SportNo: '',
     TelNo: '',
@@ -40,7 +53,6 @@ export class RegisterComponent {
     ]
   };
 
-  
   employmentHistory: any[] = [{
     WorkPlace: '',
     StartDT: new Date(),
@@ -56,20 +68,6 @@ export class RegisterComponent {
     Origanization: '',
     buttonLabel: '추가'
   }];
-
-  leaderDetailDTO: LeaderDetailDTO = {};
-  leaderNoValue: string | undefined;
-  leaderNameValue: string | undefined;
-  schoolNameValue: string | undefined;
-  schoolNoValue: string | undefined;
-
-  selectedImage: File | null = null;
-  selectedImageUrl: string | null = null;
-
-  tel1: string = '';
-  tel2: string = '';
-  tel3: string = '';
-
 
   constructor(private generalService: GeneralService,
               public dialog: MatDialog,
@@ -94,13 +92,14 @@ export class RegisterComponent {
   }
 
   leaderData: LeaderInfoDTO = this.leaderInfoDTO;
+  
   // 지도자 등록 모달창 열기
   openRegisterSuccessModal(): void {
     this.leaderData = this.leaderInfoDTO;
 
     // 유효성 검사
-    let validateResult: boolean = true;
-    
+    let validateResult: boolean = this.allvalidation(0);
+
     // 유효성 검사를 만족하지 않으면, 필수입력값 에러 모달창 열기
     if (!validateResult) {
       this.openRegisterErrorModal();
@@ -111,14 +110,14 @@ export class RegisterComponent {
           content: '입력한 내용으로 지도자를 등록하시겠습니까?'
         }
       });
-
+    
       dialogRef.afterClosed().subscribe((result: boolean) => {
-        if(result) this.register();
+        if (result) this.register();
       });
     }
   }
 
-  
+  // 지도자 등록
   register() {
     this.generalService.postLeaders(this.leaderData).subscribe(
       (result) => {
@@ -151,16 +150,6 @@ export class RegisterComponent {
     reader.readAsDataURL(file);
   }
 
-  calculateTelNo() {
-    const tel1 = this.trimAndValidate(this.tel1);
-    const tel2 = this.trimAndValidate(this.tel2);
-    const tel3 = this.trimAndValidate(this.tel3);
-  
-    if (tel1 && tel2 && tel3) {
-      this.leaderInfoDTO.TelNo = `${tel1}-${tel2}-${tel3}`;
-    }
-  }
-
   trimAndValidate(value: string): string {
     const trimmedValue = value.trim();
 
@@ -174,7 +163,31 @@ export class RegisterComponent {
 
   // 근무 이력 테이블 추가
   addHistoryRow() {
-    this.leaderInfoDTO.Work!.push({ WorkPlace: '', StartDT: new Date(), EndDT: new Date(), SportNo: '' });
+    const newWorkRow = {
+      WorkPlace: '',
+      StartDT: new Date(),
+      EndDT: new Date(),
+      SportNo: '',
+    };
+  
+    for (const work of this.leaderInfoDTO.Work!) {
+      if (!work.WorkPlace) {
+        alert("근무기관을 입력해주세요.");
+        return;
+      }
+
+      if (!work.StartDT) {
+        alert("근무시작일을 입력해주세요.");
+        return;
+      }
+
+      if (!work.SportNo) {
+        alert("종목을 입력해주세요.");
+        return;
+      }
+    }
+
+    this.leaderInfoDTO.Work!.push(newWorkRow);
   }
 
   // 근무 이력 테이블 삭제
@@ -184,7 +197,36 @@ export class RegisterComponent {
   
   // 자격사항 테이블 추가
   addCertificateRow() {
-    this.leaderInfoDTO.Certificate!.push({ CertificateName: '', CertificateNumber: '', CertificateDT: new Date(), Origanization: '' });
+    const newCertificateRow = {
+      CertificateName: '',
+      CertificateNumber: '',
+      CertificateDT: new Date(),
+      Origanization: '',
+    };
+
+    for (const certificate of this.leaderInfoDTO.Certificate!) {
+      if (!certificate.CertificateName) {
+        alert("자격/면허를 입력해주세요.");
+        return;
+      }
+  
+      if (!certificate.CertificateNumber) {
+        alert("자격번호를 입력해주세요.");
+        return;
+      }
+
+      if (!certificate.CertificateDT) {
+        alert("취득일자를 입력해주세요.");
+        return;
+      }
+  
+      if (!certificate.Origanization) {
+        alert("종목을 입력해주세요.");
+        return;
+      }
+    }
+  
+      this.leaderInfoDTO.Certificate!.push(newCertificateRow);
   }
 
   // 자격사항 테이블 삭제
@@ -192,21 +234,6 @@ export class RegisterComponent {
     this.leaderInfoDTO.Certificate!.splice(index, 1);
   }
 
-  validateDates(index: number): boolean {
-    const work = this.leaderInfoDTO.Work![index];
-    const startDt = work.StartDT;
-    const endDt = work.EndDT;
-
-    if (startDt && endDt) {
-      if (startDt > endDt) {
-        this.openStartErrorModal();
-        return false;
-      }
-    }
-
-    return true;
-  }
-  
   // 지도자 등록 취소 모달창 열기
   openRegisterCancelModal(): void {
     const dialogRef = this.dialog.open(AlertComponent, {
@@ -231,14 +258,6 @@ export class RegisterComponent {
     });
   }
 
-  // 근무 시작일 에러 모달창 열기
-  openStartErrorModal(): void {
-    const dialogRef = this.dialog.open(AlertErrorComponent, {
-      data: { title: '근무 시작일 확인',
-              content: '근무 시작일은 근무 종료일보다 빠를 수 없습니다!' }
-    });
-  }
-
   // 식별코드 검색 모달창 열기
   openLeaderSearchModal(): void {
     const dialogRef = this.dialog.open(LeaderSearchComponent);
@@ -260,5 +279,109 @@ export class RegisterComponent {
 
       this.leaderInfoDTO.SchoolNo = this.schoolNoValue;
     });
+  }
+
+  // 생년월일 유효성 검사 함수
+  validateBirthday(): boolean {
+    if (!this.leaderInfoDTO.Birthday) {
+        return false;  // 값이 없으면 false 반환
+    }
+
+    const enteredDate = new Date(this.leaderInfoDTO.Birthday);
+    return enteredDate > new Date();
+}
+
+  isTelNumberValid: boolean = true;
+
+  // 근무지 전화번호 유효성 검사 함수
+  calculateTelNo(): boolean {
+    const tel1 = this.trimAndValidate(this.tel1);
+    const tel2 = this.trimAndValidate(this.tel2);
+    const tel3 = this.trimAndValidate(this.tel3);
+  
+    if (tel1 && tel2 && tel3) {
+      this.leaderInfoDTO.TelNo = `${tel1}-${tel2}-${tel3}`;
+      this.isTelNumberValid = true;
+      return true;
+    } else {
+      this.isTelNumberValid = false;
+      return false;
+    }
+  }
+
+  // 근무 시작일 유효성 검사 함수
+  checkStartDate(index: number): boolean {
+    const work = this.leaderInfoDTO.Work && this.leaderInfoDTO.Work[index];
+    const startDate = work && work.StartDT;
+    const today = new Date();
+  
+    return !!startDate && new Date(startDate) < today;
+  }
+  
+  
+  // 근무 종료일 유효성 검사 함수 
+  checkEndDate(index: number): boolean {
+    const work = this.leaderInfoDTO.Work && this.leaderInfoDTO.Work[index];
+    const startDate = work && work.StartDT;
+    const endDate = work && work.EndDT;
+  
+    return !!startDate && !!endDate && new Date(startDate) > new Date(endDate);
+  }
+
+  // 자격번호 유효성 검사
+  checkCertificateNumberDate(index: number): boolean {
+    const certificate = this.leaderInfoDTO.Certificate && this.leaderInfoDTO.Certificate[index];
+    const certificateNumber = certificate && certificate.CertificateNumber;
+    const regex = /^[ㄱ-힣]+$/;
+
+    return !!certificateNumber && regex.test(certificateNumber);
+  }
+
+  // 취득일자 유효성 검사 함수
+  checkCertificateDTDate(index: number): boolean {
+    const certificate = this.leaderInfoDTO.Certificate && this.leaderInfoDTO.Certificate[index];
+    const certificateDate = certificate && certificate.CertificateDT;
+    const today = new Date();
+  
+    return !!certificateDate && new Date(certificateDate) > today;
+  }
+
+  // 전체 유효성 검사 true, false
+  allvalidation(index: number): boolean {
+    let isBirthdayValid: boolean = this.validateBirthday();
+    let iscalculateTelNo: boolean = this.calculateTelNo();
+    let ischeckStartDate: boolean = this.checkStartDate(index);
+    let ischeckEndDate: boolean = this.checkEndDate(index);
+    let ischeckGetDate: boolean = this.checkCertificateDTDate(index);
+    let ischeckNumberDate: boolean = this.checkCertificateNumberDate(index);
+
+    let isImagebaseValid: boolean = this.leaderInfoDTO?.ImageBase?.trim() !== '';
+    let isSportNoValid: boolean = this.leaderInfoDTO?.SportNo?.trim() !== '';
+    let isEmpDTValid: boolean = this.leaderInfoDTO?.EmpDT?.toString().trim() !== '';
+    let isBirthdayinfoValid: boolean = this.leaderInfoDTO?.Birthday?.toString().trim() !== '';
+    let isWorkValid: boolean = true;
+
+    for (let workIndex = 0; this.leaderInfoDTO?.Work && workIndex < this.leaderInfoDTO.Work.length; workIndex++) {
+      let isWorkPlaceValid: boolean = this.leaderInfoDTO.Work?.[workIndex]?.WorkPlace?.trim() !== '';
+      let isStartDTValid: boolean = this.leaderInfoDTO.Work?.[workIndex]?.StartDT?.toString().trim() !== '';
+      let isWorkSportNoValid: boolean = this.leaderInfoDTO.Work?.[workIndex]?.SportNo?.trim() !== '';
+
+      isWorkValid = isWorkPlaceValid && isStartDTValid && isWorkSportNoValid;
+    }
+    let isCertificateValid: boolean = true;
+
+    for (let certificateIndex = 0; this.leaderInfoDTO?.Certificate && certificateIndex < this.leaderInfoDTO.Certificate.length; certificateIndex++) {
+      let isCertificateNameValid: boolean = this.leaderInfoDTO.Certificate?.[certificateIndex]?.CertificateName?.trim() !== '';
+      let isCertificateNumberValid: boolean = this.leaderInfoDTO.Certificate?.[certificateIndex]?.CertificateNumber?.trim() !== '';
+      let isCertificateDTValid: boolean = this.leaderInfoDTO.Certificate?.[certificateIndex]?.CertificateDT?.toString().trim() !== '';
+      let isOriganizationValid: boolean = this.leaderInfoDTO.Certificate?.[certificateIndex]?.Origanization?.trim() !== '';
+
+      isCertificateValid = isCertificateNameValid && isCertificateNumberValid && isCertificateDTValid && isOriganizationValid;
+    }
+    
+    return !isBirthdayValid && iscalculateTelNo && ischeckStartDate &&
+            !ischeckEndDate && !ischeckGetDate && !ischeckNumberDate &&
+            isImagebaseValid && isSportNoValid && isEmpDTValid &&
+            isBirthdayinfoValid && isWorkValid && isCertificateValid;
   }
 }

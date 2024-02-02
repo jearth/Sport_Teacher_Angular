@@ -108,6 +108,12 @@
     display: none;
 }
 
+input[type="date"]::before {
+    content: attr(placeholder);
+    width: 100%;
+    color: #757575;
+}
+
 /* ------------------------------------------ */
 
 #register-container .btn {
@@ -218,6 +224,12 @@ input[data-placeholder]::before {
     font-size: 15px;
 }
 
+.Birthday-error {
+    color: #DD4B39;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
 /* ------------------------------------------ */
 
 #register-container #gender-heading {
@@ -299,6 +311,12 @@ input[name="tel2"].custom-input {
 input[name="tel3"].custom-input {
     width: 83px;
     height: 43px;
+}
+
+.Tel-error{
+    color: #DD4B39;
+    font-size: 12px;
+    margin-top: 10px;
 }
 
 /* ------------------------------------------ */
@@ -453,6 +471,26 @@ input[name="tel3"].custom-input {
 #register-container .Certificate-section-heading button.Certificate-delete {
     margin-left: 8px;
 }
+
+.startDT-error{
+    color: #DD4B39;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.endDT-error{
+    color: #DD4B39;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.certificateDT-error{
+    color: #DD4B39;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+/* ------------------------------------------------- */
 
 /* 컨텐츠 박스 1-3 */
 #register-container .Certificate-section-heading {

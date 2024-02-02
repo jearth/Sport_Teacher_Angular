@@ -25,7 +25,8 @@
                                 <h6 id="code-heading" class="custom-heading">
                                     식별코드<span class="highlight-text">*</span>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="식별코드를 선택해주세요." name="LeaderNo" [(ngModel)]="leaderInfo.leaderNo" [ngModelOptions]="{standalone: true}">
+                                        <input type="text" class="form-control" placeholder="식별코드를 선택해주세요."
+                                        name="LeaderNo" [(ngModel)]="leaderInfo.leaderNo" [ngModelOptions]="{standalone: true}">
                                         <button class="btn btn-outline-secondary" type="button" id="button-Leader" (click)="openLeaderSearchModal()">식별코드검색</button>
                                     </div>
                                 </h6>
@@ -34,7 +35,8 @@
                                 <h6 id="school-heading" class="custom-heading">
                                     학교명<span class="highlight-text">*</span>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" id="schoolcode-heading" placeholder="학교명을 선택해주세요." [(ngModel)]="leaderInfo.schoolName" [ngModelOptions]="{standalone: true}">
+                                        <input type="text" class="form-control" id="schoolcode-heading" placeholder="학교명을 선택해주세요."
+                                        [(ngModel)]="leaderInfo.schoolName" [ngModelOptions]="{standalone: true}">
                                         <input type="hidden" id="hidden-SchoolName" name="SchoolNo" />
                                         <button class="btn btn-outline-secondary" type="button" id="button-addon-School" (click)="openSchoolSearchModal()">학교명검색</button>
                                     </div>
@@ -54,7 +56,12 @@
                                 <h6 id="dob-heading" class="custom-heading">
                                     생년월일<span class="highlight-text">*</span>
                                     <div class="mb-3">
-                                        <input type="date" class="form-control" id="birthdate" data-placeholder="생년월일을 입력해주세요." name="birthday"  [(ngModel)]="leaderInfo.birthday"  [ngModelOptions]="{standalone: true}">
+                                        <input type="date" class="form-control" id="birthdate"
+                                        data-placeholder="생년월일을 입력해주세요." name="birthday" 
+                                        [(ngModel)]="leaderInfo.birthday"  [ngModelOptions]="{standalone: true}" required>
+                                        <div *ngIf="validateBirthday()" class="Birthday-error">
+                                            생년월일은 미래의 날짜일 수 없습니다.
+                                        </div>
                                     </div>
                                 </h6>
                             </div>
@@ -87,15 +94,22 @@
                                 </h6>
                             </div>
                             <div class="col-4 col-sm-4">
-                                <h6 id="phone-heading" class="custom-heading">근무지 전화번호<span class="highlight-text">*</span>
-                                <div class="d-inline-flex" id="tel-heading">
-                                    <input type="tel" size="3" name="tel1" class="form-control custom-input" placeholder="063" maxlength="3" checked [(ngModel)]="leaderInfo.tel1">
-                                    <span class="dash">-</span>
-                                    <input type="tel" size="4" name="tel2" class="form-control custom-input" placeholder="1234" maxlength="4" checked [(ngModel)]="leaderInfo.tel2">
-                                    <span class="dash">-</span>
-                                    <input type="tel" size="4" name="tel3" class="form-control custom-input" placeholder="5678" maxlength="4" checked [(ngModel)]="leaderInfo.tel3">
-                                    <input type="hidden" name="TelNo" id="hidden-tel">
-                                </div>
+                                <h6 id="phone-heading" class="custom-heading">
+                                    근무지 전화번호<span class="highlight-text">*</span>
+                                    <div class="d-inline-flex" id="tel-heading">
+                                        <input type="tel" size="3" name="tel1" class="form-control custom-input"
+                                            placeholder="063" maxlength="3" checked [(ngModel)]="leaderInfo.tel1" (input)="calculateTelNo()" required>
+                                        <span class="dash">-</span>
+                                        <input type="tel" size="4" name="tel2" class="form-control custom-input"
+                                            placeholder="1234" maxlength="4" checked [(ngModel)]="leaderInfo.tel2" (input)="calculateTelNo()" required>
+                                        <span class="dash">-</span>
+                                        <input type="tel" size="4" name="tel3" class="form-control custom-input"
+                                            placeholder="5678" maxlength="4" checked [(ngModel)]="leaderInfo.tel3" (input)="calculateTelNo()" required> 
+                                        <input type="hidden" name="TelNo" id="hidden-tel">
+                                    </div>
+                                    <div *ngIf="!isTelNumberValid" class="Tel-error">
+                                        전화번호는 숫자 외의 값이 될 수 없습니다.
+                                    </div>
                                 </h6>
                             </div>
                             <div class="col-4 col-sm-4">
@@ -126,10 +140,16 @@
                             <input type="text" class="school-name" placeholder="학교명을 입력해주세요." [(ngModel)]="work.workPlace" [name]="'Work[' + i + '].WorkPlace'" />
                         </td>
                         <td>
-                            <input type="date" class="form-control" [(ngModel)]="work.startDT" [name]="'Work[' + i + '].StartDT'" />
+                            <input type="date" class="form-control"
+                            [(ngModel)]="work.startDT" [name]="'Work[' + i + '].StartDT'"
+                            data-placeholder="근무 시작일을 선택해주세요." required/>
+                            <div *ngIf="!checkStartDate(i)" class="startDT-error">근무 시작일은 미래일 수 없습니다.</div>
                         </td>
                         <td>
-                            <input type="date" class="form-control" [(ngModel)]="work.endDT" [name]="'Work[' + i + '].EndDT'" />
+                            <input type="date" class="form-control"
+                            [(ngModel)]="work.endDT" [name]="'Work[' + i + '].EndDT'"
+                            data-placeholder="근무 종료일을 선택해주세요." required>
+                            <div *ngIf="checkEndDate(i)" class="endDT-error">근무 시작일은 종료일보다 빠를 수 없습니다.</div>
                         </td>
                         <td id="sport-table">
                             <select class="form-select" aria-label="종목을 선택해주세요." id="sport-select-container" [(ngModel)]="work.sportNo" [name]="'Work[' + i + '].SportNo'">
@@ -137,7 +157,7 @@
                                 <option *ngFor="let Sport of leaderInfo.sports" [value]="Sport.sportNo">{{ Sport.sportName }}</option>
                             </select>
                           <button *ngIf="i === 0" (click)="addHistoryRow()">추가</button>
-                          <button *ngIf="i >= 1" (click)="deleteHistoryRow(i)">삭제</button>
+                          <button *ngIf="i >= 1" (click)="deleteHistoryRow(i)" style="background-color: #969696;">삭제</button>
                         </td>
                     </tr>
                 </table>
@@ -152,15 +172,27 @@
                         <th>발급기관</th>
                     </tr>
                     <tr *ngFor="let certificate of leaderInfo.certificate; let i = index" class="Certificate-Table-Tr">
-                        <td><input type="text" class="qualification" [(ngModel)]="certificate.certificateName" [name]="'Certificate[' + i + '].CertificateName'" placeholder="자격을 입력해주세요."></td>
-                        <td><input type="text" class="qualification-number" [(ngModel)]="certificate.certificateNumber" [name]="'Certificate[' + i + '].CertificateNumber'" placeholder="영문, 숫자만 입력해주세요."></td>
                         <td>
-                            <input type="date" class="form-control" id="get-date" [(ngModel)]="certificate.certificateDT" [name]="'Certificate[' + i + '].CertificateDT'" data-placeholder="취득일자를 선택해주세요.">
+                            <input type="text" class="qualification"
+                            [(ngModel)]="certificate.certificateName" [name]="'Certificate[' + i + '].CertificateName'"
+                            placeholder="자격을 입력해주세요.">
+                        </td>
+                        <td><input type="text" class="qualification-number"
+                            [(ngModel)]="certificate.certificateNumber" [name]="'Certificate[' + i + '].CertificateNumber'"
+                            placeholder="영문, 숫자만 입력해주세요.">
+                            <div *ngIf="checkCertificateNumberDate(i)" class="certificateDT-error">자격번호는 영문, 숫자만 입력가능합니다.</div>
                         </td>
                         <td>
-                            <input type="text" class="origanization-name" placeholder="발급기관을 입력해주세요." [(ngModel)]="certificate.origanization" [name]="'Certificate[' + i + '].Origanization'">
+                            <input type="date" class="form-control" id="get-date"
+                            [(ngModel)]="certificate.certificateDT" [name]="'Certificate[' + i + '].CertificateDT'"
+                            data-placeholder="취득일자를 선택해주세요." required>
+                            <div *ngIf="checkCertificateDTDate(i)" class="certificateDT-error">취득일자는 미래일 수 없습니다.</div>
+                        </td>
+                        <td>
+                            <input type="text" class="origanization-name" placeholder="발급기관을 입력해주세요."
+                            [(ngModel)]="certificate.origanization" [name]="'Certificate[' + i + '].Origanization'">
                             <button class="button Certificate-add" *ngIf="i === 0" (click)="addCertificateRow()">추가</button>
-                            <button *ngIf="i >= 1" (click)="deleteCertificateRow(i)">삭제</button>
+                            <button *ngIf="i >= 1" (click)="deleteCertificateRow(i)" style="background-color: #969696; margin-left: 10px;">삭제</button>
                         </td>
                     </tr>
                 </table>

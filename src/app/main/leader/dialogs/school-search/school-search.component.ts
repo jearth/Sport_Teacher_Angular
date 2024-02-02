@@ -50,11 +50,17 @@ export class SchoolSearchComponent {
   }
 
   closeSchoolSearchModal(): void {
+    // const selectedSchoolName = this.selectedSchool ? this.selectedSchool.schoolName : null;
+    // const selectedSchoolNo = this.selectedSchool ? this.selectedSchool.schoolNo : null;
+
     this.generalService.setSelectedSchoolNo(this.selectedSchool);
     this.dialogRef.close({
       SchoolName: this.selectedSchool ? this.selectedSchool.schoolName : null,
       SchoolNo: this.selectedSchool ? this.selectedSchool.schoolNo : null,
     });
+
+    // console.log("Selected School Name:", selectedSchoolName);
+    // console.log("Selected School No:", selectedSchoolNo);
   }
 
   selectRow(leader: any): void {
