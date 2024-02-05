@@ -221,7 +221,7 @@ export class RegisterComponent {
       }
   
       if (!certificate.Origanization) {
-        alert("종목을 입력해주세요.");
+        alert("발급기관을 입력해주세요.");
         return;
       }
     }
@@ -239,6 +239,12 @@ export class RegisterComponent {
     const dialogRef = this.dialog.open(AlertComponent, {
       data: { title: '지도자 등록 취소',
               content: '지도자 등록을 취소하시겠습니까? <br> 작성한 내용은 모두 삭제됩니다.' }
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.router.navigate(['/']);
+      }
     });
   }
 

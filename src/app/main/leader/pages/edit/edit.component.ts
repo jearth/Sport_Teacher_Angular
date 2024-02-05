@@ -134,42 +134,90 @@ export class EditComponent {
   }
 
   // 근무 이력 테이블 추가
-  employmentHistory = [
-    { WorkPlace: '', StartDT: new Date(), EndDT: new Date(), SportNo: '', buttonLabel: '추가' }
-  ];
-
   addHistoryRow() {
-    const employmentHistory = {workPlace: '', startDT: null, endDT: null, sportName: ''};
-    (this.leaderInfo!.work as any[]).push(employmentHistory);
-  }
+    const newWorkRow = {
+      workPlace: '',
+      startDT: new Date(),
+      endDT: new Date(),
+      sportNo: '',
+    };
+  
+    for (const work of this.leaderInfo.work!) {
+      if (!work.workPlace) {
+        alert("근무기관을 입력해주세요.");
+        return;
+      }
 
-  deleteHistoryRow(index: number) {
-    if (this.leaderInfo) {
-        this.leaderInfo.work!.splice(index, 1);
+      if (!work.startDT) {
+        alert("근무시작일을 입력해주세요.");
+        return;
+      }
+
+      if (!work.sportNo) {
+        alert("종목을 입력해주세요.");
+        return;
+      }
     }
+
+    this.leaderInfo.work!.push(newWorkRow);
+  }
+  
+  // 근무 이력 테이블 삭제
+  deleteHistoryRow(index: number) {
+    this.leaderInfo.work!.splice(index, 1);
   }
 
   // 자격사항 테이블 추가
-  certificateList = [
-    { CertificateName: '', CertificateNumber: '', CertificateDT: new Date(), Origanization: '', buttonLabel: '추가' }
-  ];
-
   addCertificateRow() {
-    const certificateList = {workPlace: '', startDT: null, endDT: null, sportName: ''};
-    (this.leaderInfo!.certificate as any[]).push(certificateList);
+    const newCertificateRow = {
+      certificateName: '',
+      certificateNumber: '',
+      certificateDT: new Date(),
+      origanization: '',
+    };
+
+    for (const certificate of this.leaderInfo.certificate!) {
+      if (!certificate.certificateName) {
+        alert("자격/면허를 입력해주세요.");
+        return;
+      }
+  
+      if (!certificate.certificateNumber) {
+        alert("자격번호를 입력해주세요.");
+        return;
+      }
+
+      if (!certificate.certificateDT) {
+        alert("취득일자를 입력해주세요.");
+        return;
+      }
+  
+      if (!certificate.origanization) {
+        alert("발급기관을 입력해주세요.");
+        return;
+      }
+    }
+  
+      this.leaderInfo.certificate!.push(newCertificateRow);
   }
 
+  // 자격사항 테이블 삭제
   deleteCertificateRow(index: number) {
-    if (this.leaderInfo) {
-        this.leaderInfo.certificate!.splice(index, 1);
-    }
+    this.leaderInfo.certificate!.splice(index, 1);
   }
+
 
   // 지도자 등록 취소 모달창 열기
   openEditCancelModal(): void {
     const dialogRef = this.dialog.open(AlertComponent, {
       data: { title: '지도자 수정 취소',
               content: '지도자 수정을 취소하시겠습니까? <br> 작성한 내용은 모두 삭제됩니다.' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.router.navigate(['/']);
+      }
     });
   }
 
