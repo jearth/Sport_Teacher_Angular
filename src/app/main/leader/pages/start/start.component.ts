@@ -27,7 +27,7 @@ export class StartComponent {
   tableDate: LeaderDTO[] = [];
   displayedColumns: string[] = ['position', 'leaderNo', 'leaderName', 'sportName', 'schoolName', 'detailInfo'];
   dataSource = new MatTableDataSource<LeaderDTO>(this.leaderDTO);
-  itemsPerPage: number = 10; 
+  itemsPerPage: number = 5; 
   currentPage: number = 1;  
 
   selectedRows: Set<number> = new Set<number>();
