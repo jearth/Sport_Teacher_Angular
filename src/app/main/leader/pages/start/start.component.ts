@@ -179,7 +179,6 @@ export class StartComponent {
     if (this.tableDate.length > 0) {
       return this.tableDate.slice(startIndex, endIndex);
     } else {
-      console.log('paginationTableData Length: 0');
       return [];
     }
   }

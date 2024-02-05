@@ -50,7 +50,6 @@ export class EditComponent {
           }
 
           this.leaderInfo = data;
-          console.log('전체 수정 데이터:', this.leaderInfo);
         },
         (error) => {
           console.error('리더 정보를 가져오는 동안 오류가 발생했습니다.', error);
@@ -123,7 +122,6 @@ export class EditComponent {
   openSchoolSearchModal(): void {
     const dialogRef = this.dialog.open(SchoolSearchComponent);
     dialogRef.afterClosed().subscribe((value: any) => {
-      console.log("Returned Value from School Search Modal:", value);
 
       this.schoolNameValue = value?.SchoolName;
       this.schoolNoValue = value?.SchoolNo;
