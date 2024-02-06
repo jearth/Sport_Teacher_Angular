@@ -138,6 +138,7 @@ export class EditComponent {
       startDT: new Date(),
       endDT: new Date(),
       sportNo: '',
+      sportName: ''
     };
   
     for (const work of this.leaderInfo.work!) {
@@ -334,8 +335,8 @@ export class EditComponent {
 
       isCertificateValid = isCertificateNameValid && isCertificateNumberValid && isCertificateDTValid && isOriganizationValid;
     }
-    
-    return !isBirthdayValid && iscalculateTelNo && ischeckStartDate &&
+
+    return !isBirthdayValid && !iscalculateTelNo && ischeckStartDate &&
             !ischeckEndDate && !ischeckGetDate && !ischeckNumberDate &&
             isImagebaseValid && isSportNoValid && isEmpDTValid &&
             isBirthdayinfoValid && isWorkValid && isCertificateValid;
