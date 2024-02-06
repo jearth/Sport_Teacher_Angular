@@ -15,7 +15,7 @@ import { LeaderInfoDTO } from '../model/LeaderInfoEdit.model';
   providedIn: 'root'
 })
 export class GeneralService {
-  readonly ROOT_URL: string = 'https://localhost:7211';
+  readonly ROOT_URL: string = 'https://sports-leader-api-jisu.azurewebsites.net';
 
   constructor(private http: HttpClient) { }
 
