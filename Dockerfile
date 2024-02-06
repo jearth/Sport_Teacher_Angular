@@ -11,4 +11,4 @@ RUN npm run build
 # RUN
 FROM nginx:alpine
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /usr/src/app/dist/second-sportsleader /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist/sport-leader-angular /usr/share/nginx/html
